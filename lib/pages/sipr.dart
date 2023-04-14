@@ -743,82 +743,258 @@ class _SIPRState extends State<SIPR> {
             ),
           ),
           subtitle: Text(
-            "Surat Izin Penyelenggaraan Reklame",
+            "SURAT IZIN PENYELENGGARAAN REKLAME",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
         ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 0, 135, 45),
-                  Color.fromARGB(255, 255, 255, 255),
-                ],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(0.0, 1.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp),
-          ),
-        ),
-        foregroundColor: Colors.black87,
-        bottomOpacity: 0.0,
-        elevation: 1.0,
+        // flexibleSpace: Container(
+        //   decoration: const BoxDecoration(
+        //     gradient: LinearGradient(
+        //         colors: [
+        //           Color.fromARGB(255, 0, 135, 45),
+        //           Color.fromARGB(255, 255, 255, 255),
+        //         ],
+        //         begin: FractionalOffset(0.0, 0.0),
+        //         end: FractionalOffset(0.0, 1.0),
+        //         stops: [0.0, 1.0],
+        //         tileMode: TileMode.clamp),
+        //   ),
+        // ),
+        // foregroundColor: Colors.black87,
+        // bottomOpacity: 0.0,
+        // elevation: 1.0,
         titleTextStyle: const TextStyle(
           fontSize: 15,
         ),
       ),
-      body: Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: Colors.blue,
-          ),
-        ),
-        child: Stepper(
-          controlsBuilder: (context, details) {
-            return const SizedBox();
-          },
-          currentStep: currentStep,
-          steps: [
-            Step(
-              isActive: currentStep >= 0,
-              state: currentStep >= 0 ? StepState.disabled : StepState.complete,
-              title: const Text("DATA PEMOHON"),
-              subtitle: const Text("Data Profil Pemohon"),
-              content: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
+      body: Stepper(
+        controlsBuilder: (context, details) {
+          return const SizedBox();
+        },
+        currentStep: currentStep,
+        steps: [
+          Step(
+            isActive: currentStep >= 0,
+            state: currentStep >= 0 ? StepState.disabled : StepState.complete,
+            title: const Text("PEMOHON"),
+            subtitle: const Text(
+              "DATA LENGKAP PROFIL PEMOHON",
+              style: TextStyle(fontSize: 10),
+            ),
+            content: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  DropdownSearch<PemohonReklameModels>(
+                    asyncItems: (String filter) async {
+                      var response = await http.get(
+                        Uri.parse(
+                            "$baseUrl/api/pemohon-reklame?key=${ApiContainer.baseKey}"),
+                      );
+
+                      if (response.statusCode != 200) {
+                        errorData();
+                        return [];
+                      } else {
+                        List pemohon = (json.decode(response.body)
+                            as Map<String, dynamic>)["data"];
+
+                        List<PemohonReklameModels> pemohonList = [];
+
+                        for (var element in pemohon) {
+                          pemohonList
+                              .add(PemohonReklameModels.fromJson(element));
+                        }
+
+                        return pemohonList;
+                      }
+                    },
+                    popupProps: PopupProps.menu(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          '${item.jenis}',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "JENIS PEMOHON",
+                        labelStyle: TextStyle(fontSize: 13),
+                        contentPadding: EdgeInsets.only(bottom: 3),
+                      ),
+                    ),
+                    enabled: isJenisPemohon,
+                    onChanged: (value) {
+                      setState(() {
+                        _idJenisPemohon.text = value?.id.toString() as String;
+                        _jenisPemohon.text = value?.jenis ?? "";
+                        varNib = value?.nib;
+                        varNpwp = value?.npwp;
+                        varNpwpd = value?.npwpd;
+                        varSkPenunjukan = value?.skPenunjukan;
+
+                        isJenisPemohon = false;
+                      });
+                    },
+                    selectedItem: PemohonReklameModels(
+                      id: int.tryParse(_idJenisPemohon.text),
+                      jenis: _jenisPemohon.text,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?.jenis ?? "",
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    validator: (value) {
+                      if (value?.jenis == "") {
+                        return 'Jenis Pemohgon wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (_idJenisPemohon.text == "2" ||
+                      _idJenisPemohon.text == "3")
+                    buildPerusahaan(),
+                  if (_idJenisPemohon.text != "") ...[
                     const SizedBox(height: 5),
-                    DropdownSearch<PemohonReklameModels>(
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _namaPemohon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NAMA LENGKAP PEMOHON",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nama pemohon wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _gelarDepan,
+                              textCapitalization: TextCapitalization.words,
+                              decoration: const InputDecoration(
+                                labelText: "GELAR DEPAN",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _gelarBelakang,
+                              textCapitalization: TextCapitalization.words,
+                              decoration: const InputDecoration(
+                                labelText: "GELAR BELAKANG",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _alamatPemohon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "ALAMAT RUMAH JALAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _dusunPemohon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "DUSUN / LINGKUNGAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _rtPemohon,
+                              decoration: const InputDecoration(
+                                labelText: "RT",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                              validator: (value) {
+                                if (value == "") {
+                                  return 'RT wajib diisi';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _rwPemohon,
+                              decoration: const InputDecoration(
+                                labelText: "RW",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                              validator: (value) {
+                                if (value == "") {
+                                  return 'RW wajib diisi';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    DropdownSearch<PropinsiModels>(
                       asyncItems: (String filter) async {
                         var response = await http.get(
                           Uri.parse(
-                              "$baseUrl/api/pemohon-reklame?key=${ApiContainer.baseKey}"),
+                              "$baseUrl/api/propinsi?key=${ApiContainer.baseKey}"),
                         );
 
                         if (response.statusCode != 200) {
                           errorData();
                           return [];
                         } else {
-                          List pemohon = (json.decode(response.body)
+                          List propinsi = (json.decode(response.body)
                               as Map<String, dynamic>)["data"];
 
-                          List<PemohonReklameModels> pemohonList = [];
+                          List<PropinsiModels> propinsiList = [];
 
-                          for (var element in pemohon) {
-                            pemohonList
-                                .add(PemohonReklameModels.fromJson(element));
+                          for (var element in propinsi) {
+                            propinsiList.add(PropinsiModels.fromJson(element));
                           }
 
-                          return pemohonList;
+                          return propinsiList;
                         }
                       },
-                      popupProps: PopupProps.menu(
+                      popupProps: PopupProps.dialog(
                         itemBuilder: (context, item, isSelected) => ListTile(
                           title: Text(
-                            '${item.jenis}',
+                            '${item.namaProp}',
                             style: const TextStyle(fontSize: 13),
                           ),
                         ),
@@ -826,175 +1002,68 @@ class _SIPRState extends State<SIPR> {
                       ),
                       dropdownDecoratorProps: const DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Jenis Pemohon",
+                          labelText: "PROPINSI",
                           labelStyle: TextStyle(fontSize: 13),
-                          contentPadding: EdgeInsets.only(bottom: 3),
                         ),
                       ),
-                      enabled: isJenisPemohon,
                       onChanged: (value) {
                         setState(() {
-                          _idJenisPemohon.text = value?.id.toString() as String;
-                          _jenisPemohon.text = value?.jenis ?? "";
-                          varNib = value?.nib;
-                          varNpwp = value?.npwp;
-                          varNpwpd = value?.npwpd;
-                          varSkPenunjukan = value?.skPenunjukan;
-
-                          isJenisPemohon = false;
+                          _nopropPemohon.text = value?.noProp ?? "";
+                          _propinsiPemohon.text = value?.namaProp ?? "";
+                          _nokabPemohon.text = "";
+                          _kotaPemohon.text = "";
+                          _nokecPemohon.text = "";
+                          _kecamatanPemohon.text = "";
+                          _nokelPemohon.text = "";
+                          _desaPemohon.text = "";
                         });
                       },
-                      selectedItem: PemohonReklameModels(
-                        id: int.tryParse(_idJenisPemohon.text),
-                        jenis: _jenisPemohon.text,
+                      selectedItem: PropinsiModels(
+                        noProp: _nopropPemohon.text,
+                        namaProp: _propinsiPemohon.text,
                       ),
                       dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?.jenis ?? "",
+                        selectedItem?.namaProp ?? "",
                         style: const TextStyle(
                           fontSize: 13,
                         ),
                       ),
                       validator: (value) {
-                        if (value?.jenis == "") {
-                          return 'Jenis Pemohgon wajib diisi';
+                        if (value?.noProp == "") {
+                          return 'Propinsi tempat tinggal wajib diisi';
                         }
                         return null;
                       },
                     ),
-                    if (_idJenisPemohon.text == "2" ||
-                        _idJenisPemohon.text == "3")
-                      buildPerusahaan(),
-                    if (_idJenisPemohon.text != "") ...[
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _namaPemohon,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nama Lengkap Pemohon",
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nama pemohon wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
+                    if (_nopropPemohon.text != "") ...[
                       const SizedBox(height: 5),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _gelarDepan,
-                                textCapitalization: TextCapitalization.words,
-                                decoration: const InputDecoration(
-                                  labelText: "Gelar Depan",
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _gelarBelakang,
-                                textCapitalization: TextCapitalization.words,
-                                decoration: const InputDecoration(
-                                  labelText: "Gelar Belakang",
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _alamatPemohon,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Alamat Rumah Jalan",
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _dusunPemohon,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Dusun/Lingkungan",
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _rtPemohon,
-                                decoration: const InputDecoration(
-                                  labelText: "RT",
-                                ),
-                                validator: (value) {
-                                  if (value == "") {
-                                    return 'RT wajib diisi';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _rwPemohon,
-                                decoration: const InputDecoration(
-                                  labelText: "RW",
-                                ),
-                                validator: (value) {
-                                  if (value == "") {
-                                    return 'RW wajib diisi';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownSearch<PropinsiModels>(
+                      DropdownSearch<KotaModels>(
                         asyncItems: (String filter) async {
                           var response = await http.get(
                             Uri.parse(
-                                "$baseUrl/api/propinsi?key=${ApiContainer.baseKey}"),
+                                "$baseUrl/api/kota?no_prop=${_nopropPemohon.text}&key=${ApiContainer.baseKey}"),
                           );
 
                           if (response.statusCode != 200) {
                             errorData();
                             return [];
                           } else {
-                            List propinsi = (json.decode(response.body)
+                            List kota = (json.decode(response.body)
                                 as Map<String, dynamic>)["data"];
 
-                            List<PropinsiModels> propinsiList = [];
+                            List<KotaModels> kotaList = [];
 
-                            for (var element in propinsi) {
-                              propinsiList
-                                  .add(PropinsiModels.fromJson(element));
+                            for (var element in kota) {
+                              kotaList.add(KotaModels.fromJson(element));
                             }
 
-                            return propinsiList;
+                            return kotaList;
                           }
                         },
                         popupProps: PopupProps.dialog(
                           itemBuilder: (context, item, isSelected) => ListTile(
                             title: Text(
-                              '${item.namaProp}',
+                              '${item.namaKab}',
                               style: const TextStyle(fontSize: 13),
                             ),
                           ),
@@ -1002,1049 +1071,47 @@ class _SIPRState extends State<SIPR> {
                         ),
                         dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
-                            labelText: "Propinsi",
+                            labelText: "KOTA",
+                            labelStyle: TextStyle(fontSize: 13),
                           ),
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _nopropPemohon.text = value?.noProp ?? "";
-                            _propinsiPemohon.text = value?.namaProp ?? "";
-                            _nokabPemohon.text = "";
-                            _kotaPemohon.text = "";
+                            _nokabPemohon.text = value?.noKab ?? "";
+                            _kotaPemohon.text = value?.namaKab ?? "";
+
                             _nokecPemohon.text = "";
                             _kecamatanPemohon.text = "";
                             _nokelPemohon.text = "";
                             _desaPemohon.text = "";
                           });
                         },
-                        selectedItem: PropinsiModels(
-                          noProp: _nopropPemohon.text,
-                          namaProp: _propinsiPemohon.text,
+                        selectedItem: KotaModels(
+                          noKab: _nokabPemohon.text,
+                          namaKab: _kotaPemohon.text,
                         ),
                         dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.namaProp ?? "",
+                          selectedItem?.namaKab ?? "",
                           style: const TextStyle(
                             fontSize: 13,
                           ),
                         ),
                         validator: (value) {
-                          if (value?.noProp == "") {
-                            return 'Propinsi tempat tinggal wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      if (_nopropPemohon.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<KotaModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/kota?no_prop=${_nopropPemohon.text}&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List kota = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<KotaModels> kotaList = [];
-
-                              for (var element in kota) {
-                                kotaList.add(KotaModels.fromJson(element));
-                              }
-
-                              return kotaList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaKab}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Kota",
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _nokabPemohon.text = value?.noKab ?? "";
-                              _kotaPemohon.text = value?.namaKab ?? "";
-
-                              _nokecPemohon.text = "";
-                              _kecamatanPemohon.text = "";
-                              _nokelPemohon.text = "";
-                              _desaPemohon.text = "";
-                            });
-                          },
-                          selectedItem: KotaModels(
-                            noKab: _nokabPemohon.text,
-                            namaKab: _kotaPemohon.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaKab ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.noKab == "") {
-                              return 'Kota tempat tinggal wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (_nopropPemohon.text != "" &&
-                          _nokabPemohon.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<KecamatanModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/kecamatan?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List kecamatan = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<KecamatanModels> kecamatanList = [];
-
-                              for (var element in kecamatan) {
-                                kecamatanList
-                                    .add(KecamatanModels.fromJson(element));
-                              }
-
-                              return kecamatanList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaKec}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Kecamatan",
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _nokecPemohon.text = value?.noKec ?? "";
-                              _kecamatanPemohon.text = value?.namaKec ?? "";
-
-                              _nokelPemohon.text = "";
-                              _desaPemohon.text = "";
-                            });
-                          },
-                          selectedItem: KecamatanModels(
-                            noKec: _nokecPemohon.text,
-                            namaKec: _kecamatanPemohon.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaKec ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.noKec == "") {
-                              return 'Kecamatan tempat tinggal wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (_nopropPemohon.text != "" &&
-                          _nokabPemohon.text != "" &&
-                          _nokecPemohon.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<DesaModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/desa?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&no_kec=${_nokecPemohon.text}&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List desa = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<DesaModels> desaList = [];
-
-                              for (var element in desa) {
-                                desaList.add(DesaModels.fromJson(element));
-                              }
-
-                              return desaList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaKel}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Desa/Kelurahan",
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _nokelPemohon.text = value?.noKel ?? "";
-                              _desaPemohon.text = value?.namaKel ?? "";
-                            });
-                          },
-                          selectedItem: DesaModels(
-                            noKel: _nokelPemohon.text,
-                            namaKel: _desaPemohon.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaKel ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.noKel == "") {
-                              return 'Desa/Kelurahan tempat tinggal wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 14),
-                        controller: _kodeposPemohon,
-                        decoration: const InputDecoration(
-                          labelText: "Kodepos",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      if (_idJenisPemohon.text == "1") ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 14),
-                          controller: _latPemohon,
-                          decoration: const InputDecoration(
-                            labelText: "Latitude",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                          enabled: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Kordinat latitude wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 14),
-                          controller: _lngPemohon,
-                          decoration: const InputDecoration(
-                            labelText: "Longitude",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                          enabled: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Kordinat longitude wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  height: 40,
-                                  width: double.infinity,
-                                  child: ElevatedButton.icon(
-                                    label: const Text(
-                                      'TENTUKAN KORDINAT RUMAH',
-                                      style: TextStyle(fontSize: 12),
-                                    ),
-                                    icon: const Icon(
-                                      Icons.location_pin,
-                                      size: 18,
-                                    ),
-                                    onPressed: () async {
-                                      LatLng kordinat;
-                                      kordinat = LatLng(
-                                          double.parse(_latPemohon.text),
-                                          double.parse(_lngPemohon.text));
-                                      final result = await Get.to(
-                                          () => MapKordinat(kordinat));
-
-                                      setState(() {
-                                        if (result != null) {
-                                          _latPemohon.text =
-                                              result.latitude.toString();
-                                          _lngPemohon.text =
-                                              result.longitude.toString();
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _tempLahirPemohon,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Tempat Lahir",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Tempat lahir wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        decoration: const InputDecoration(
-                          labelText: "Tanggal Lahir",
-                          labelStyle: TextStyle(fontSize: 13),
-                          suffixIcon: Icon(Icons.calendar_month),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Tanggal lahir wajib diisi';
-                          }
-                          return null;
-                        },
-                        controller: _tglLahirPemohon1,
-                        autocorrect: false,
-                        readOnly: true,
-                        onTap: () async {
-                          DateTime? newDateLahir = await showDatePicker(
-                            context: context,
-                            initialDate: _tglLahirPemohon.text != ""
-                                ? DateTime.parse(_tglLahirPemohon.text)
-                                : DateTime.now(),
-                            firstDate: DateTime(1900),
-                            lastDate: DateTime(2100),
-                          );
-
-                          if (newDateLahir != null) {
-                            setState(() {
-                              _tglLahirPemohon.text =
-                                  DateFormat("yyyy-MM-dd").format(newDateLahir);
-                              _tglLahirPemohon1.text =
-                                  DateFormat("d MMMM yyyy", "id")
-                                      .format(newDateLahir);
-                            });
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownSearch<Map<String, dynamic>>(
-                        items: const [
-                          {"id": 1, "kelamin": "LAKI-LAKI"},
-                          {"id": 2, "kelamin": "PEREMPUAN"},
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Jenis Kelamin",
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _kelaminPemohon.text =
-                                value?["id"].toString() as String;
-                            _jenisKelaminPemohon.text = value?["kelamin"] ?? "";
-                          });
-                        },
-                        selectedItem: {
-                          "id": _kelaminPemohon.text,
-                          "kelamin": _jenisKelaminPemohon.text
-                        },
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item["kelamin"],
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?["kelamin"] ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?["id"] == "null" || value?["id"] == "0") {
-                            return 'Jenis kelamin wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _pekerjaanPemohon,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Pekerjaan",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Pekerjaan wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownSearch<Map<String, dynamic>>(
-                        items: const [
-                          {"id": 1, "warganegara": "INDONESIA"},
-                          {"id": 2, "warganegara": "ASING"},
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Warganegara",
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _wniPemohon.text = value?["id"].toString() ?? "";
-                            _jenisWniPemohon.text = value?["warganegara"] ?? "";
-                          });
-                        },
-                        selectedItem: {
-                          "id": _wniPemohon.text,
-                          "warganegara": _jenisWniPemohon.text,
-                        },
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item["warganegara"],
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?["warganegara"] ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?["id"] == "null" || value?["id"] == "0") {
-                            return 'Kewarganegaraan wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      if (_wniPemohon.text == '2') ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<NegaraModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/negara?key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List negara = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<NegaraModels> negaraList = [];
-
-                              for (var element in negara) {
-                                negaraList.add(NegaraModels.fromJson(element));
-                              }
-
-                              return negaraList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaNegara}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Negara Asal",
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _negaraPemohon.text = value?.namaNegara ?? "";
-                            });
-                          },
-                          selectedItem: NegaraModels(
-                            namaNegara: _negaraPemohon.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaNegara ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.namaNegara == "") {
-                              return 'Negara asal wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _emailPemohon,
-                        decoration: const InputDecoration(
-                          labelText: "Email",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Alamat email wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _hpPemohon,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor HP",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        enabled: false,
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nomor HP wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _nikPemohon,
-                        decoration: const InputDecoration(
-                          labelText: "NIK",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        enabled: false,
-                        validator: (value) {
-                          if (value == "") {
-                            return 'NIK wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      ktpPemohon != null
-                          ? Image.file(
-                              ktpPemohon!,
-                              fit: BoxFit.cover,
-                            )
-                          : _ktpPemohon.text != ""
-                              ? DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Image.network(
-                                    _ktpPemohon.text,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return const Text('Loading foto...');
-                                    },
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : Image.asset(
-                                  'assets/images/noimg.png',
-                                  height: 200,
-                                  width: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                      const SizedBox(height: 5),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Get.bottomSheet(
-                              Container(
-                                height: 125,
-                                color: Colors.white,
-                                child: ListView(
-                                  children: [
-                                    ListTile(
-                                        leading: const Icon(Icons.camera_alt),
-                                        title: const Text("Foto Dari Kamera"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getKtp(ImageSource.camera);
-                                        }),
-                                    ListTile(
-                                        leading: const Icon(Icons.image),
-                                        title: const Text(
-                                            "Ambil File Dari Gallery"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getKtp(ImageSource.gallery);
-                                        })
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH KTP",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _ktpPemohon,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_ktpPemohon.text == '')
-                        const Text("Foto KTP wajib diisi"),
-                    ],
-                    const Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate() &&
-                              isPemohonKirim == true) {
-                            isPemohonKirim == false;
-                            loadingData();
-
-                            Map<String, String> headers = {
-                              'Content-Type': 'multipart/form-data',
-                            };
-
-                            Map<String, String> body = {
-                              "key": ApiContainer.baseKey,
-                              "uid": _uidPemohon.text,
-                              "nama": _namaPemohon.text,
-                              "gelar_depan": _gelarDepan.text,
-                              "gelar_belakang": _gelarBelakang.text,
-                              "alamat": _alamatPemohon.text,
-                              "dusun": _dusunPemohon.text,
-                              "rt": _rtPemohon.text,
-                              "rw": _rwPemohon.text,
-                              "noprop": _nopropPemohon.text,
-                              "nokab": _nokabPemohon.text,
-                              "nokec": _nokecPemohon.text,
-                              "nokel": _nokelPemohon.text,
-                              "kodepos": _kodeposPemohon.text,
-                              "temp_lahir": _tempLahirPemohon.text,
-                              "tgl_lahir": _tglLahirPemohon.text,
-                              "kelamin": _kelaminPemohon.text,
-                              "pekerjaan": _pekerjaanPemohon.text,
-                              "warganegara": _wniPemohon.text,
-                              "negara": _negaraPemohon.text,
-                              "email": _emailPemohon.text,
-                              "lat": _latPemohon.text,
-                              "lng": _lngPemohon.text,
-                              "nib": _nib.text,
-                              "id_badan": _idBadan.text,
-                              "nama_badan": _namaBadan.text,
-                              "alamat_badan": _alamatBadan.text,
-                              "dusun_badan": _dusunBadan.text,
-                              "rt_badan": _rtBadan.text,
-                              "rw_badan": _rwBadan.text,
-                              "nopropbadan": _nopropBadan.text,
-                              "nokabbadan": _nokabBadan.text,
-                              "nokecbadan": _nokecBadan.text,
-                              "nokelbadan": _nokelBadan.text,
-                              "jabatan": _jabatanPemohon.text,
-                            };
-
-                            var request = http.MultipartRequest(
-                                'POST', Uri.parse("$baseUrl/api/sipr-user"));
-
-                            request.headers.addAll(headers);
-                            request.fields.addAll(body);
-
-                            if (fotoPemohon != null) {
-                              request.files.add(
-                                  await http.MultipartFile.fromPath(
-                                      'foto', fotoPemohon?.path ?? ""));
-                            }
-
-                            if (ktpPemohon != null) {
-                              request.files.add(
-                                  await http.MultipartFile.fromPath(
-                                      'ktp', ktpPemohon?.path ?? ""));
-                            }
-
-                            var response = await request.send();
-
-                            if (response.statusCode == 200) {
-                              hapusLoader();
-                              setState(() {
-                                currentStep++;
-                              });
-                            } else {
-                              hapusLoader();
-                              errorData();
-                            }
-                          } else {
-                            hapusLoader();
-                            errorPesan("Silahkan melengkapi semua data");
-                          }
-                        },
-                        label: const Text('SELANJUTNYA'),
-                        icon: const Icon(Icons.check),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          minimumSize: const Size(double.infinity, 50),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Step(
-              isActive: currentStep >= 1,
-              state: currentStep >= 1 ? StepState.disabled : StepState.complete,
-              title: const Text("DATA PERMOHONAN"),
-              subtitle: const Text("Rincian Permohonan Izin Reklame"),
-              content: Form(
-                key: _permohonanKey,
-                child: Column(
-                  children: [
-                    DropdownSearch<KategoriReklameModels>(
-                      asyncItems: (String filter) async {
-                        var response = await http.get(
-                          Uri.parse(
-                              "$baseUrl/api/kategori-reklame?key=${ApiContainer.baseKey}"),
-                        );
-
-                        if (response.statusCode != 200) {
-                          errorData();
-                          return [];
-                        } else {
-                          List bentuk = (json.decode(response.body)
-                              as Map<String, dynamic>)["data"];
-
-                          List<KategoriReklameModels> bentukList = [];
-
-                          for (var element in bentuk) {
-                            bentukList
-                                .add(KategoriReklameModels.fromJson(element));
-                          }
-
-                          return bentukList;
-                        }
-                      },
-                      enabled: isKategoriReklame,
-                      popupProps: PopupProps.menu(
-                        itemBuilder: (context, item, isSelected) => ListTile(
-                          title: Text(
-                            '${item.kategori}',
-                            style: const TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        fit: FlexFit.loose,
-                      ),
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          labelText: "Kategori Reklame",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _idKategoriReklame.text =
-                              value?.id.toString() as String;
-                          _kategoriReklame.text = value?.kategori ?? "";
-                          disclaimer = value?.disclaimer ?? "";
-
-                          isKategoriReklame = false;
-                        });
-                      },
-                      selectedItem: KategoriReklameModels(
-                        id: int.tryParse(_idKategoriReklame.text),
-                        kategori: _kategoriReklame.text,
-                      ),
-                      dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?.kategori ?? "",
-                        style: const TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value?.kategori == "") {
-                          return 'Kategori wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    if (_idKategoriReklame.text != "") ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<JenisReklameModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/jenis-reklame?kategori=${_idKategoriReklame.text}&key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List jenis = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<JenisReklameModels> jenisList = [];
-
-                            for (var element in jenis) {
-                              jenisList
-                                  .add(JenisReklameModels.fromJson(element));
-                            }
-
-                            return jenisList;
-                          }
-                        },
-                        enabled: isJenisReklame,
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.jenis}',
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Jenis Reklame",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _idJenisReklame.text =
-                                value?.id.toString() as String;
-                            _jenisReklame.text = value?.jenis ?? "";
-                            isJenisReklame = false;
-
-                            varArea = value?.area;
-                            varLahan = value?.lahan;
-                            varZona = value?.zona;
-                            varSisi = value?.sisi;
-                            varKetJenis = value?.ketJenis;
-                            varUkuran = value?.ukuran;
-                            varTinggi = value?.tinggi;
-                            varDiameterTiang = value?.diameterTiang;
-                            varLembar = value?.lembar;
-                            varItem = value?.item;
-                            varKordinat = value?.kordinat;
-                            varImb = value?.imb;
-                            varKkpr = value?.kkpr;
-                            varAsuransi = value?.asuransi;
-                            varFotoLokasi = value?.fotoLokasi;
-                            varFotoMateri = value?.fotoMateri;
-                          });
-                        },
-                        selectedItem: JenisReklameModels(
-                          id: int.tryParse(_idJenisReklame.text),
-                          jenis: _jenisReklame.text,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.jenis ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.jenis == "") {
-                            return 'Jenis wajib diisi';
+                          if (value?.noKab == "") {
+                            return 'Kota tempat tinggal wajib diisi';
                           }
                           return null;
                         },
                       ),
                     ],
-                    if (_idJenisReklame.text != "") ...[
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _materiReklame,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Isi Materi Reklame",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Materi reklame wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownSearch<Map<String, dynamic>>(
-                        items: const [
-                          {"id": 0, "rokok": "TIDAK"},
-                          {"id": 1, "rokok": "YA"},
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Iklan Rokok",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _idIklanRokok.text =
-                                value?["id"].toString() as String;
-                            _iklanRokok.text = value?["rokok"] ?? "";
-                          });
-                        },
-                        selectedItem: {
-                          "id": _idIklanRokok.text,
-                          "rokok": _iklanRokok.text
-                        },
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item["rokok"],
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?["rokok"] ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?["id"] == "") {
-                            return 'Iklan rokok wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _namaUsaha,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nama Usaha",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nama usaha wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
+                    if (_nopropPemohon.text != "" &&
+                        _nokabPemohon.text != "") ...[
                       const SizedBox(height: 5),
                       DropdownSearch<KecamatanModels>(
                         asyncItems: (String filter) async {
                           var response = await http.get(
                             Uri.parse(
-                                "$baseUrl/api/kecamatan-permohonan?key=${ApiContainer.baseKey}"),
+                                "$baseUrl/api/kecamatan?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&key=${ApiContainer.baseKey}"),
                           );
 
                           if (response.statusCode != 200) {
@@ -2075,22 +1142,22 @@ class _SIPRState extends State<SIPR> {
                         ),
                         dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
-                            labelText: "Kecamatan",
+                            labelText: "KECAMATAN",
                             labelStyle: TextStyle(fontSize: 13),
                           ),
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _nokecLokasi.text = value?.noKec as String;
-                            _kecamatanLokasi.text = value?.namaKec ?? "";
+                            _nokecPemohon.text = value?.noKec ?? "";
+                            _kecamatanPemohon.text = value?.namaKec ?? "";
 
-                            _nokelLokasi.text = "";
-                            _desaLokasi.text = "";
+                            _nokelPemohon.text = "";
+                            _desaPemohon.text = "";
                           });
                         },
                         selectedItem: KecamatanModels(
-                          noKec: _nokecLokasi.text,
-                          namaKec: _kecamatanLokasi.text,
+                          noKec: _nokecPemohon.text,
+                          namaKec: _kecamatanPemohon.text,
                         ),
                         dropdownBuilder: (context, selectedItem) => Text(
                           selectedItem?.namaKec ?? "",
@@ -2100,173 +1167,1269 @@ class _SIPRState extends State<SIPR> {
                         ),
                         validator: (value) {
                           if (value?.noKec == "") {
-                            return 'Kecamatan tempat praktik wajib diisi';
+                            return 'Kecamatan tempat tinggal wajib diisi';
                           }
                           return null;
                         },
                       ),
-                      if (_nokecLokasi.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<DesaModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/desa-permohonan?no_kec=${_nokecLokasi.text}&key=${ApiContainer.baseKey}"),
-                            );
+                    ],
+                    if (_nopropPemohon.text != "" &&
+                        _nokabPemohon.text != "" &&
+                        _nokecPemohon.text != "") ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<DesaModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/desa?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&no_kec=${_nokecPemohon.text}&key=${ApiContainer.baseKey}"),
+                          );
 
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List desa = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List desa = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
 
-                              List<DesaModels> desaList = [];
+                            List<DesaModels> desaList = [];
 
-                              for (var element in desa) {
-                                desaList.add(DesaModels.fromJson(element));
-                              }
-
-                              return desaList;
+                            for (var element in desa) {
+                              desaList.add(DesaModels.fromJson(element));
                             }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaKel}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Desa/Kelurahan",
-                              labelStyle: TextStyle(fontSize: 13),
+
+                            return desaList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.namaKel}',
+                              style: const TextStyle(fontSize: 13),
                             ),
                           ),
-                          onChanged: (value) {
-                            setState(() {
-                              _nokelLokasi.text = value?.noKel as String;
-                              _desaLokasi.text = value?.namaKel ?? "";
-                            });
-                          },
-                          selectedItem: DesaModels(
-                            noKel: _nokelLokasi.text,
-                            namaKel: _desaLokasi.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaKel ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.noKel == "") {
-                              return 'Desa/Kelurahan tempat praktik wajib diisi';
-                            }
-                            return null;
-                          },
+                          fit: FlexFit.loose,
                         ),
-                      ],
-                      if (_nokecLokasi.text != "" &&
-                          _nokelLokasi.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<JalanModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/jalan?nokec=${_nokecLokasi.text}&nokel=${_nokelLokasi.text}&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List jalan = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<JalanModels> jalanList = [];
-
-                              for (var element in jalan) {
-                                jalanList.add(JalanModels.fromJson(element));
-                              }
-
-                              return jalanList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.nama}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Jalan",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _idJalan.text = value?.id.toString() as String;
-                              _namaJalan.text = value?.nama ?? "";
-                            });
-                          },
-                          selectedItem: JalanModels(
-                            id: int.tryParse(_idJalan.text),
-                            nama: _namaJalan.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.nama ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.id == null) {
-                              return 'Nama jalan wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (_idJalan.text == "1") ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _namaJalan,
-                          textCapitalization: TextCapitalization.words,
-                          decoration: const InputDecoration(
-                            labelText: "Nama Jalan",
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "DESA / KELURAHAN",
                             labelStyle: TextStyle(fontSize: 13),
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _nomorLokasi,
-                          decoration: const InputDecoration(
-                            labelText: "Nomor Rumah",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
+                        onChanged: (value) {
+                          setState(() {
+                            _nokelPemohon.text = value?.noKel ?? "";
+                            _desaPemohon.text = value?.namaKel ?? "";
+                          });
+                        },
+                        selectedItem: DesaModels(
+                          noKel: _nokelPemohon.text,
+                          namaKel: _desaPemohon.text,
                         ),
-                      ],
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.namaKel ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.noKel == "") {
+                            return 'Desa/Kelurahan tempat tinggal wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _kodeposPemohon,
+                      decoration: const InputDecoration(
+                        labelText: "KODE POS",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    if (_idJenisPemohon.text == "1") ...[
                       const SizedBox(height: 5),
                       TextFormField(
                         style: const TextStyle(fontSize: 13),
-                        controller: _dusunLokasi,
-                        textCapitalization: TextCapitalization.words,
+                        controller: _latPemohon,
                         decoration: const InputDecoration(
-                          labelText: "Dusun / Lingkungan",
+                          labelText: "GARIS LINTANG",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                        enabled: false,
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Garis Lintang wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _lngPemohon,
+                        decoration: const InputDecoration(
+                          labelText: "GARIS BUJUR",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                        enabled: false,
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Garis Bujur wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton.icon(
+                                  label: const Text(
+                                    'KOORDINAT RUMAH',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.location_pin,
+                                    size: 18,
+                                  ),
+                                  onPressed: () async {
+                                    LatLng kordinat;
+                                    kordinat = LatLng(
+                                        double.parse(_latPemohon.text),
+                                        double.parse(_lngPemohon.text));
+                                    final result = await Get.to(
+                                        () => MapKordinat(kordinat));
+
+                                    setState(() {
+                                      if (result != null) {
+                                        _latPemohon.text =
+                                            result.latitude.toString();
+                                        _lngPemohon.text =
+                                            result.longitude.toString();
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _tempLahirPemohon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "TEMPAT LAHIR",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Tempat lahir wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      decoration: const InputDecoration(
+                        labelText: "TANGGAL LAHIR",
+                        labelStyle: TextStyle(fontSize: 13),
+                        suffixIcon: Icon(Icons.calendar_month),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Tanggal lahir wajib diisi';
+                        }
+                        return null;
+                      },
+                      controller: _tglLahirPemohon1,
+                      autocorrect: false,
+                      readOnly: true,
+                      onTap: () async {
+                        DateTime? newDateLahir = await showDatePicker(
+                          context: context,
+                          initialDate: _tglLahirPemohon.text != ""
+                              ? DateTime.parse(_tglLahirPemohon.text)
+                              : DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                        );
+
+                        if (newDateLahir != null) {
+                          setState(() {
+                            _tglLahirPemohon.text =
+                                DateFormat("yyyy-MM-dd").format(newDateLahir);
+                            _tglLahirPemohon1.text =
+                                DateFormat("d MMMM yyyy", "id")
+                                    .format(newDateLahir);
+                          });
+                        }
+                      },
+                    ),
+                    if (_tglLahirPemohon.text == '')
+                      const Text("Tanggal lahir wajib diisi"),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _tglLahirPemohon,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    DropdownSearch<Map<String, dynamic>>(
+                      items: const [
+                        {"id": 1, "kelamin": "LAKI-LAKI"},
+                        {"id": 2, "kelamin": "PEREMPUAN"},
+                      ],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "JENIS KELAMIN",
                           labelStyle: TextStyle(fontSize: 13),
                         ),
                       ),
+                      onChanged: (value) {
+                        setState(() {
+                          _kelaminPemohon.text =
+                              value?["id"].toString() as String;
+                          _jenisKelaminPemohon.text = value?["kelamin"] ?? "";
+                        });
+                      },
+                      selectedItem: {
+                        "id": _kelaminPemohon.text,
+                        "kelamin": _jenisKelaminPemohon.text
+                      },
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item["kelamin"],
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?["kelamin"] ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?["id"] == "null" || value?["id"] == "0") {
+                          return 'Jenis kelamin wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _pekerjaanPemohon,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "PEKERJAAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Pekerjaan wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    DropdownSearch<Map<String, dynamic>>(
+                      items: const [
+                        {"id": 1, "warganegara": "INDONESIA"},
+                        {"id": 2, "warganegara": "ASING"},
+                      ],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "WARGANEGARA",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _wniPemohon.text = value?["id"].toString() ?? "";
+                          _jenisWniPemohon.text = value?["warganegara"] ?? "";
+                        });
+                      },
+                      selectedItem: {
+                        "id": _wniPemohon.text,
+                        "warganegara": _jenisWniPemohon.text,
+                      },
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item["warganegara"],
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?["warganegara"] ?? "",
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value?["id"] == "null" || value?["id"] == "0") {
+                          return 'Kewarganegaraan wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    if (_wniPemohon.text == '2') ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<NegaraModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/negara?key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List negara = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<NegaraModels> negaraList = [];
+
+                            for (var element in negara) {
+                              negaraList.add(NegaraModels.fromJson(element));
+                            }
+
+                            return negaraList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.namaNegara}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "NEGARA ASAL",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _negaraPemohon.text = value?.namaNegara ?? "";
+                          });
+                        },
+                        selectedItem: NegaraModels(
+                          namaNegara: _negaraPemohon.text,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.namaNegara ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.namaNegara == "") {
+                            return 'Negara asal wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _emailPemohon,
+                      decoration: const InputDecoration(
+                        labelText: "ALAMAT EMAIL",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Alamat email wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _hpPemohon,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR HANDPHONE",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      enabled: false,
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nomor HP wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _nikPemohon,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR INDUK KEPENDUDUKAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      enabled: false,
+                      validator: (value) {
+                        if (value == "") {
+                          return 'NIK wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    ktpPemohon != null
+                        ? Image.file(
+                            ktpPemohon!,
+                            fit: BoxFit.cover,
+                          )
+                        : _ktpPemohon.text != ""
+                            ? DecoratedBox(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Image.network(
+                                  _ktpPemohon.text,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Text('Loading foto...');
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : Image.asset(
+                                'assets/images/noimg.png',
+                                height: 200,
+                                width: 150,
+                                fit: BoxFit.cover,
+                              ),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Get.bottomSheet(
+                            Container(
+                              height: 125,
+                              color: Colors.white,
+                              child: ListView(
+                                children: [
+                                  ListTile(
+                                      leading: const Icon(Icons.camera_alt),
+                                      title: const Text("Foto Dari Kamera"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getKtp(ImageSource.camera);
+                                      }),
+                                  ListTile(
+                                      leading: const Icon(Icons.image),
+                                      title:
+                                          const Text("Ambil File Dari Gallery"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getKtp(ImageSource.gallery);
+                                      })
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH KTP",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _ktpPemohon,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_ktpPemohon.text == '')
+                      const Text("Foto KTP wajib diisi"),
+                  ],
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate() &&
+                            isPemohonKirim == true) {
+                          isPemohonKirim == false;
+                          loadingData();
+
+                          Map<String, String> headers = {
+                            'Content-Type': 'multipart/form-data',
+                          };
+
+                          Map<String, String> body = {
+                            "key": ApiContainer.baseKey,
+                            "uid": _uidPemohon.text,
+                            "nama": _namaPemohon.text,
+                            "gelar_depan": _gelarDepan.text,
+                            "gelar_belakang": _gelarBelakang.text,
+                            "alamat": _alamatPemohon.text,
+                            "dusun": _dusunPemohon.text,
+                            "rt": _rtPemohon.text,
+                            "rw": _rwPemohon.text,
+                            "noprop": _nopropPemohon.text,
+                            "nokab": _nokabPemohon.text,
+                            "nokec": _nokecPemohon.text,
+                            "nokel": _nokelPemohon.text,
+                            "kodepos": _kodeposPemohon.text,
+                            "temp_lahir": _tempLahirPemohon.text,
+                            "tgl_lahir": _tglLahirPemohon.text,
+                            "kelamin": _kelaminPemohon.text,
+                            "pekerjaan": _pekerjaanPemohon.text,
+                            "warganegara": _wniPemohon.text,
+                            "negara": _negaraPemohon.text,
+                            "email": _emailPemohon.text,
+                            "lat": _latPemohon.text,
+                            "lng": _lngPemohon.text,
+                            "nib": _nib.text,
+                            "id_badan": _idBadan.text,
+                            "nama_badan": _namaBadan.text,
+                            "alamat_badan": _alamatBadan.text,
+                            "dusun_badan": _dusunBadan.text,
+                            "rt_badan": _rtBadan.text,
+                            "rw_badan": _rwBadan.text,
+                            "nopropbadan": _nopropBadan.text,
+                            "nokabbadan": _nokabBadan.text,
+                            "nokecbadan": _nokecBadan.text,
+                            "nokelbadan": _nokelBadan.text,
+                            "jabatan": _jabatanPemohon.text,
+                          };
+
+                          var request = http.MultipartRequest(
+                              'POST', Uri.parse("$baseUrl/api/sipr-user"));
+
+                          request.headers.addAll(headers);
+                          request.fields.addAll(body);
+
+                          if (fotoPemohon != null) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                                'foto', fotoPemohon?.path ?? ""));
+                          }
+
+                          if (ktpPemohon != null) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                                'ktp', ktpPemohon?.path ?? ""));
+                          }
+
+                          var response = await request.send();
+
+                          if (response.statusCode == 200) {
+                            hapusLoader();
+                            setState(() {
+                              currentStep++;
+                            });
+                          } else {
+                            hapusLoader();
+                            errorData();
+                          }
+                        } else {
+                          hapusLoader();
+                          errorPesan("ISIAN DATA BELUM LENGKAP");
+                        }
+                      },
+                      label: const Text('SELANJUTNYA'),
+                      icon: const Icon(Icons.check),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Step(
+            isActive: currentStep >= 1,
+            state: currentStep >= 1 ? StepState.disabled : StepState.complete,
+            title: const Text("DATA PERMOHONAN"),
+            subtitle: const Text(
+              "DATA PERMOHONAN IZIN REKLAME",
+              style: TextStyle(fontSize: 10),
+            ),
+            content: Form(
+              key: _permohonanKey,
+              child: Column(
+                children: [
+                  DropdownSearch<KategoriReklameModels>(
+                    asyncItems: (String filter) async {
+                      var response = await http.get(
+                        Uri.parse(
+                            "$baseUrl/api/kategori-reklame?key=${ApiContainer.baseKey}"),
+                      );
+
+                      if (response.statusCode != 200) {
+                        errorData();
+                        return [];
+                      } else {
+                        List bentuk = (json.decode(response.body)
+                            as Map<String, dynamic>)["data"];
+
+                        List<KategoriReklameModels> bentukList = [];
+
+                        for (var element in bentuk) {
+                          bentukList
+                              .add(KategoriReklameModels.fromJson(element));
+                        }
+
+                        return bentukList;
+                      }
+                    },
+                    enabled: isKategoriReklame,
+                    popupProps: PopupProps.menu(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          '${item.kategori}',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "KATEGORI REKLAME",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _idKategoriReklame.text =
+                            value?.id.toString() as String;
+                        _kategoriReklame.text = value?.kategori ?? "";
+                        disclaimer = value?.disclaimer ?? "";
+
+                        isKategoriReklame = false;
+                      });
+                    },
+                    selectedItem: KategoriReklameModels(
+                      id: int.tryParse(_idKategoriReklame.text),
+                      kategori: _kategoriReklame.text,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?.kategori ?? "",
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    validator: (value) {
+                      if (value?.kategori == "") {
+                        return 'Kategori wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (_idKategoriReklame.text != "") ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<JenisReklameModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/jenis-reklame?kategori=${_idKategoriReklame.text}&key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List jenis = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<JenisReklameModels> jenisList = [];
+
+                          for (var element in jenis) {
+                            jenisList.add(JenisReklameModels.fromJson(element));
+                          }
+
+                          return jenisList;
+                        }
+                      },
+                      enabled: isJenisReklame,
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.jenis}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "JENIS REKLAME",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _idJenisReklame.text = value?.id.toString() as String;
+                          _jenisReklame.text = value?.jenis ?? "";
+                          isJenisReklame = false;
+
+                          varArea = value?.area;
+                          varLahan = value?.lahan;
+                          varZona = value?.zona;
+                          varSisi = value?.sisi;
+                          varKetJenis = value?.ketJenis;
+                          varUkuran = value?.ukuran;
+                          varTinggi = value?.tinggi;
+                          varDiameterTiang = value?.diameterTiang;
+                          varLembar = value?.lembar;
+                          varItem = value?.item;
+                          varKordinat = value?.kordinat;
+                          varImb = value?.imb;
+                          varKkpr = value?.kkpr;
+                          varAsuransi = value?.asuransi;
+                          varFotoLokasi = value?.fotoLokasi;
+                          varFotoMateri = value?.fotoMateri;
+                        });
+                      },
+                      selectedItem: JenisReklameModels(
+                        id: int.tryParse(_idJenisReklame.text),
+                        jenis: _jenisReklame.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.jenis ?? "",
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value?.jenis == "") {
+                          return 'Jenis wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  if (_idJenisReklame.text != "") ...[
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _materiReklame,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "ISI MATERI REKLAME",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Materi reklame wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    DropdownSearch<Map<String, dynamic>>(
+                      items: const [
+                        {"id": 0, "rokok": "TIDAK"},
+                        {"id": 1, "rokok": "YA"},
+                      ],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "IKLAN ROKOK",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _idIklanRokok.text =
+                              value?["id"].toString() as String;
+                          _iklanRokok.text = value?["rokok"] ?? "";
+                        });
+                      },
+                      selectedItem: {
+                        "id": _idIklanRokok.text,
+                        "rokok": _iklanRokok.text
+                      },
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item["rokok"],
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?["rokok"] ?? "",
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value?["id"] == "") {
+                          return 'Iklan rokok wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _namaUsaha,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NAMA USAHA",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nama usaha wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    DropdownSearch<KecamatanModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/kecamatan-permohonan?key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List kecamatan = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<KecamatanModels> kecamatanList = [];
+
+                          for (var element in kecamatan) {
+                            kecamatanList
+                                .add(KecamatanModels.fromJson(element));
+                          }
+
+                          return kecamatanList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.namaKec}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "KECAMATAN",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nokecLokasi.text = value?.noKec as String;
+                          _kecamatanLokasi.text = value?.namaKec ?? "";
+
+                          _nokelLokasi.text = "";
+                          _desaLokasi.text = "";
+                        });
+                      },
+                      selectedItem: KecamatanModels(
+                        noKec: _nokecLokasi.text,
+                        namaKec: _kecamatanLokasi.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.namaKec ?? "",
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value?.noKec == "") {
+                          return 'Kecamatan tempat praktik wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    if (_nokecLokasi.text != "") ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<DesaModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/desa-permohonan?no_kec=${_nokecLokasi.text}&key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List desa = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<DesaModels> desaList = [];
+
+                            for (var element in desa) {
+                              desaList.add(DesaModels.fromJson(element));
+                            }
+
+                            return desaList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.namaKel}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "DESA / KELURAHAN",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _nokelLokasi.text = value?.noKel as String;
+                            _desaLokasi.text = value?.namaKel ?? "";
+                          });
+                        },
+                        selectedItem: DesaModels(
+                          noKel: _nokelLokasi.text,
+                          namaKel: _desaLokasi.text,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.namaKel ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.noKel == "") {
+                            return 'Desa/Kelurahan tempat praktik wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    if (_nokecLokasi.text != "" && _nokelLokasi.text != "") ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<JalanModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/jalan?nokec=${_nokecLokasi.text}&nokel=${_nokelLokasi.text}&key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List jalan = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<JalanModels> jalanList = [];
+
+                            for (var element in jalan) {
+                              jalanList.add(JalanModels.fromJson(element));
+                            }
+
+                            return jalanList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.nama}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "JALAN",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _idJalan.text = value?.id.toString() as String;
+                            _namaJalan.text = value?.nama ?? "";
+                          });
+                        },
+                        selectedItem: JalanModels(
+                          id: int.tryParse(_idJalan.text),
+                          nama: _namaJalan.text,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.nama ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.id == null) {
+                            return 'Nama jalan wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    if (_idJalan.text == "1") ...[
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _namaJalan,
+                        textCapitalization: TextCapitalization.words,
+                        decoration: const InputDecoration(
+                          labelText: "NAMA JALAN",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _nomorLokasi,
+                        decoration: const InputDecoration(
+                          labelText: "NOMOR RUMAH",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _dusunLokasi,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "DUSUN / LINGKUNGAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _rtLokasi,
+                              decoration: const InputDecoration(
+                                labelText: "RT",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: TextFormField(
+                              style: const TextStyle(fontSize: 13),
+                              controller: _rwLokasi,
+                              decoration: const InputDecoration(
+                                labelText: "RW",
+                                labelStyle: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    if (varKordinat == 1) ...[
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _latLokasi,
+                        decoration: const InputDecoration(
+                          labelText: "GARIS LINTANG",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                        enabled: false,
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Garis Lintang wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _lngLokasi,
+                        decoration: const InputDecoration(
+                          labelText: "GARIS BUJUR",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                        enabled: false,
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Garis Bujur wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton.icon(
+                                  label: const Text(
+                                    'KOORDINAT LOKASI',
+                                    style: TextStyle(fontSize: 13),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.location_pin,
+                                    size: 18,
+                                  ),
+                                  onPressed: () async {
+                                    LatLng kordinat;
+                                    if (_latLokasi.text != "") {
+                                      kordinat = LatLng(
+                                          double.parse(_latLokasi.text),
+                                          double.parse(_lngLokasi.text));
+                                    } else {
+                                      kordinat = const LatLng(
+                                          -8.223600593616215,
+                                          114.36705853790045);
+                                    }
+
+                                    final result = await Get.to(
+                                        () => MapKordinat(kordinat));
+
+                                    setState(() {
+                                      if (result != null) {
+                                        _latLokasi.text =
+                                            result.latitude.toString();
+                                        _lngLokasi.text =
+                                            result.longitude.toString();
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                    ],
+                    if (varArea == 1) ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<AreaModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/area?key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List area = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<AreaModels> areaList = [];
+
+                            for (var element in area) {
+                              areaList.add(AreaModels.fromJson(element));
+                            }
+
+                            return areaList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.area}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "AREA",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _idArea.text = value?.id.toString() as String;
+                            _namaArea.text = value?.area ?? "";
+                          });
+                        },
+                        selectedItem: AreaModels(
+                          id: int.tryParse(_idArea.text),
+                          area: _namaArea.text,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.area ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.area == "") {
+                            return 'Area wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    if (varUkuran == 1) ...[
                       const SizedBox(height: 5),
                       IntrinsicHeight(
                         child: Row(
@@ -2275,2591 +2438,2343 @@ class _SIPRState extends State<SIPR> {
                             Expanded(
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 13),
-                                controller: _rtLokasi,
+                                controller: _panjang,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'(^-?\d*\.?\d*)'))
+                                ],
                                 decoration: const InputDecoration(
-                                  labelText: "RT",
+                                  labelText: "PANJANG",
                                   labelStyle: TextStyle(fontSize: 13),
+                                  suffixText: "m",
                                 ),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _panjang.text == ""
+                                        ? panjangBidang = 0
+                                        : panjangBidang =
+                                            double.parse(_panjang.text);
+
+                                    _lebar.text == ""
+                                        ? lebarBidang = 0
+                                        : lebarBidang =
+                                            double.parse(_lebar.text);
+
+                                    luasBidang = panjangBidang! * lebarBidang!;
+
+                                    if (luasBidang! > 0) {
+                                      if (_idKategoriReklame.text == "2" &&
+                                          luasBidang! > 8) {
+                                        _panjang.text = "";
+                                        _lebar.text = "";
+                                        _luas.text = "";
+                                        errorPesan(
+                                            "Luas bidang Reklame Permanen maksimal 8 m\u00B2");
+                                      } else if (_idKategoriReklame.text ==
+                                              "3" &&
+                                          luasBidang! <= 8) {
+                                        _panjang.text = "";
+                                        _lebar.text = "";
+                                        _luas.text = "";
+                                        errorPesan(
+                                            "Luas bidang Reklame Terbatas harus\n 8 m\u00B2 keatas");
+                                      } else {
+                                        _luas.text = luasBidang.toString();
+                                      }
+                                    }
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == "") {
+                                    return 'Wajib diisi';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
+                            const SizedBox(width: 15),
+                            const Text("X"),
                             const SizedBox(width: 15),
                             Expanded(
                               child: TextFormField(
                                 style: const TextStyle(fontSize: 13),
-                                controller: _rwLokasi,
+                                controller: _lebar,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp(r'(^-?\d*\.?\d*)'))
+                                ],
                                 decoration: const InputDecoration(
-                                  labelText: "RW",
+                                  labelText: "LEBAR",
                                   labelStyle: TextStyle(fontSize: 13),
+                                  suffixText: "m",
                                 ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (varKordinat == 1) ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _latLokasi,
-                          decoration: const InputDecoration(
-                            labelText: "Latitude",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                          enabled: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Kordinat latitude wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _lngLokasi,
-                          decoration: const InputDecoration(
-                            labelText: "Longitude",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                          enabled: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Kordinat longitude wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: SizedBox(
-                                  height: 40,
-                                  width: double.infinity,
-                                  child: ElevatedButton.icon(
-                                    label: const Text(
-                                      'TENTUKAN KORDINAT LOKASI',
-                                      style: TextStyle(fontSize: 13),
-                                    ),
-                                    icon: const Icon(
-                                      Icons.location_pin,
-                                      size: 18,
-                                    ),
-                                    onPressed: () async {
-                                      LatLng kordinat;
-                                      if (_latLokasi.text != "") {
-                                        kordinat = LatLng(
-                                            double.parse(_latLokasi.text),
-                                            double.parse(_lngLokasi.text));
+                                onChanged: (value) {
+                                  setState(() {
+                                    _panjang.text == ""
+                                        ? panjangBidang = 0
+                                        : panjangBidang =
+                                            double.parse(_panjang.text);
+
+                                    _lebar.text == ""
+                                        ? lebarBidang = 0
+                                        : lebarBidang =
+                                            double.parse(_lebar.text);
+
+                                    luasBidang = panjangBidang! * lebarBidang!;
+
+                                    if (luasBidang! > 0) {
+                                      if (_idKategoriReklame.text == "2" &&
+                                          luasBidang! > 8) {
+                                        _panjang.text = "";
+                                        _lebar.text = "";
+                                        _luas.text = "";
+                                        errorPesan(
+                                            "Luas bidang Reklame Permanen maksimal 8 m\u00B2");
+                                      } else if (_idKategoriReklame.text ==
+                                              "3" &&
+                                          luasBidang! <= 8) {
+                                        _panjang.text = "";
+                                        _lebar.text = "";
+                                        _luas.text = "";
+                                        errorPesan(
+                                            "Luas bidang Reklame Terbatas harus\n 8 m\u00B2 keatas");
                                       } else {
-                                        kordinat = const LatLng(
-                                            -8.223600593616215,
-                                            114.36705853790045);
+                                        _luas.text = luasBidang.toString();
                                       }
-
-                                      final result = await Get.to(
-                                          () => MapKordinat(kordinat));
-
-                                      setState(() {
-                                        if (result != null) {
-                                          _latLokasi.text =
-                                              result.latitude.toString();
-                                          _lngLokasi.text =
-                                              result.longitude.toString();
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                      ],
-                      if (varArea == 1) ...[
-                        const SizedBox(height: 15),
-                        DropdownSearch<AreaModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/area?key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List area = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<AreaModels> areaList = [];
-
-                              for (var element in area) {
-                                areaList.add(AreaModels.fromJson(element));
-                              }
-
-                              return areaList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.area}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Area",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _idArea.text = value?.id.toString() as String;
-                              _namaArea.text = value?.area ?? "";
-                            });
-                          },
-                          selectedItem: AreaModels(
-                            id: int.tryParse(_idArea.text),
-                            area: _namaArea.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.area ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.area == "") {
-                              return 'Area wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (varUkuran == 1) ...[
-                        const SizedBox(height: 5),
-                        IntrinsicHeight(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  style: const TextStyle(fontSize: 13),
-                                  controller: _panjang,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'(^-?\d*\.?\d*)'))
-                                  ],
-                                  decoration: const InputDecoration(
-                                    labelText: "Panjang",
-                                    labelStyle: TextStyle(fontSize: 13),
-                                    suffixText: "m",
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _panjang.text == ""
-                                          ? panjangBidang = 0
-                                          : panjangBidang =
-                                              double.parse(_panjang.text);
-
-                                      _lebar.text == ""
-                                          ? lebarBidang = 0
-                                          : lebarBidang =
-                                              double.parse(_lebar.text);
-
-                                      luasBidang =
-                                          panjangBidang! * lebarBidang!;
-
-                                      if (luasBidang! > 0) {
-                                        if (_idKategoriReklame.text == "2" &&
-                                            luasBidang! > 8) {
-                                          _panjang.text = "";
-                                          _lebar.text = "";
-                                          _luas.text = "";
-                                          errorPesan(
-                                              "Luas bidang Reklame Permanen maksimal 8 m\u00B2");
-                                        } else if (_idKategoriReklame.text ==
-                                                "3" &&
-                                            luasBidang! <= 8) {
-                                          _panjang.text = "";
-                                          _lebar.text = "";
-                                          _luas.text = "";
-                                          errorPesan(
-                                              "Luas bidang Reklame Terbatas harus\n 8 m\u00B2 keatas");
-                                        } else {
-                                          _luas.text = luasBidang.toString();
-                                        }
-                                      }
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == "") {
-                                      return 'Wajib diisi';
                                     }
-                                    return null;
-                                  },
-                                ),
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == "") {
+                                    return 'Wajib diisi';
+                                  }
+                                  return null;
+                                },
                               ),
-                              const SizedBox(width: 15),
-                              const Text("X"),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: TextFormField(
-                                  style: const TextStyle(fontSize: 13),
-                                  controller: _lebar,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(
-                                        RegExp(r'(^-?\d*\.?\d*)'))
-                                  ],
-                                  decoration: const InputDecoration(
-                                    labelText: "Lebar",
-                                    labelStyle: TextStyle(fontSize: 13),
-                                    suffixText: "m",
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _panjang.text == ""
-                                          ? panjangBidang = 0
-                                          : panjangBidang =
-                                              double.parse(_panjang.text);
-
-                                      _lebar.text == ""
-                                          ? lebarBidang = 0
-                                          : lebarBidang =
-                                              double.parse(_lebar.text);
-
-                                      luasBidang =
-                                          panjangBidang! * lebarBidang!;
-
-                                      if (luasBidang! > 0) {
-                                        if (_idKategoriReklame.text == "2" &&
-                                            luasBidang! > 8) {
-                                          _panjang.text = "";
-                                          _lebar.text = "";
-                                          _luas.text = "";
-                                          errorPesan(
-                                              "Luas bidang Reklame Permanen maksimal 8 m\u00B2");
-                                        } else if (_idKategoriReklame.text ==
-                                                "3" &&
-                                            luasBidang! <= 8) {
-                                          _panjang.text = "";
-                                          _lebar.text = "";
-                                          _luas.text = "";
-                                          errorPesan(
-                                              "Luas bidang Reklame Terbatas harus\n 8 m\u00B2 keatas");
-                                        } else {
-                                          _luas.text = luasBidang.toString();
-                                        }
-                                      }
-                                    });
-                                  },
-                                  validator: (value) {
-                                    if (value == "") {
-                                      return 'Wajib diisi';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _luas,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'(^-?\d*\.?\d*)'))
+                            ),
                           ],
-                          decoration: const InputDecoration(
-                            labelText: "Luas Bidang",
-                            labelStyle: TextStyle(fontSize: 13),
-                            suffixText: "m\u00B2",
-                          ),
-                          enabled: false,
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (varTinggi == 1) ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _tinggi,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'(^-?\d*\.?\d*)'))
-                          ],
-                          decoration: const InputDecoration(
-                            labelText: "Tinggi",
-                            labelStyle: TextStyle(fontSize: 13),
-                            suffixText: "m",
-                          ),
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Ukuran tinggi wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (varDiameterTiang == 1) ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _diameter,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'(^-?\d*\.?\d*)'))
-                          ],
-                          decoration: const InputDecoration(
-                            labelText: "Diameter Tiang",
-                            labelStyle: TextStyle(fontSize: 13),
-                            suffixText: "cm",
-                          ),
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Diameter tiang wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (varLembar == 1) ...[
-                        const SizedBox(height: 5),
-                        TextFormField(
-                          style: const TextStyle(fontSize: 13),
-                          controller: _lembar,
-                          keyboardType: TextInputType.number,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: const InputDecoration(
-                            labelText: "Lembar",
-                            labelStyle: TextStyle(fontSize: 13),
-                            suffixText: "lembar",
-                          ),
-                          validator: (value) {
-                            if (value == "") {
-                              return 'Jumlah lembar wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      if (varSisi == 1) ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<Map<String, dynamic>>(
-                          items: const [
-                            {"id": 1, "sisi": "1 SISI"},
-                            {"id": 2, "sisi": "2 SISI"},
-                            {"id": 3, "sisi": "3 SISI"},
-                            {"id": 4, "sisi": "4 SISI"},
-                          ],
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Sisi/Sudut Pandang",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _sisi.text = value?["id"].toString() as String;
-                              _sisiReklame.text = value?["sisi"] ?? "";
-                            });
-                          },
-                          selectedItem: {
-                            "id": _sisi.text,
-                            "sisi": _sisiReklame.text,
-                          },
-                          popupProps: PopupProps.menu(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                item["sisi"],
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?["sisi"] ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?["id"] == "") {
-                              return 'Jumlah sisi Wajib Diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 5),
-                      DropdownSearch<Map<String, dynamic>>(
-                        items: const [
-                          {"posisi": "HORIZONTAL"},
-                          {"posisi": "VERTIKAL"},
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Posisi",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _posisi.text =
-                                value?["posisi"].toString() as String;
-                          });
-                        },
-                        selectedItem: {
-                          "posisi": _posisi.text,
-                        },
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item["posisi"],
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?["posisi"] ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?["posisi"] == "") {
-                            return 'Posisi pemasangan Wajib Diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      if (varLahan == 1) ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<LahanModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/lahan?key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List lahan = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<LahanModels> lahanList = [];
-
-                              for (var element in lahan) {
-                                lahanList.add(LahanModels.fromJson(element));
-                              }
-
-                              return lahanList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.lahan}',
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Status Lahan",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _idLahan.text = value?.id.toString() as String;
-                              _namaLahan.text = value?.lahan ?? "";
-                            });
-                          },
-                          selectedItem: LahanModels(
-                            id: int.tryParse(_idLahan.text),
-                            lahan: _namaLahan.text,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.lahan ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.lahan == "") {
-                              return 'Status lahan wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      const Divider(
-                        height: 50,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            if (_permohonanKey.currentState!.validate()) {
-                              setState(() {
-                                currentStep++;
-                              });
-                            } else {
-                              errorPesan("Silahkan melengkapi semua data");
-                            }
-                          },
-                          label: const Text('SELANJUTNYA'),
-                          icon: const Icon(Icons.check),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-            Step(
-              isActive: currentStep >= 2,
-              state: currentStep >= 2 ? StepState.disabled : StepState.complete,
-              title: const Text("DOKUMEN"),
-              subtitle: const Text("Dokumen Permohonan Izin Reklame"),
-              content: Form(
-                key: _dokumenKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Text(
-                      "FOTO TAMPAK DEPAN",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    fotoDepan != null
-                        ? Image.file(
-                            fotoDepan!,
-                            fit: BoxFit.cover,
-                          )
-                        : _fotoDepan.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _fotoDepan.text,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 125,
-                              color: Colors.white,
-                              child: ListView(
-                                children: [
-                                  ListTile(
-                                      leading: const Icon(Icons.camera_alt),
-                                      title: const Text("Foto Dari Kamera"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getDepan(ImageSource.camera);
-                                      }),
-                                  ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title:
-                                          const Text("Ambil File Dari Gallery"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getDepan(ImageSource.gallery);
-                                      })
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.upload,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          "UNGGAH FOTO",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _fotoDepan,
-                        validator: (value) {
-                          if (value == "") {
-                            const Text("Foto wajib diisi");
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const Divider(
-                      height: 30,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    const Text(
-                      "FOTO TAMPAK BELAKANG",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    fotoBelakang != null
-                        ? Image.file(
-                            fotoBelakang!,
-                            fit: BoxFit.cover,
-                          )
-                        : _fotoBelakang.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _fotoBelakang.text,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 125,
-                              color: Colors.white,
-                              child: ListView(
-                                children: [
-                                  ListTile(
-                                      leading: const Icon(Icons.camera_alt),
-                                      title: const Text("Foto Dari Kamera"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getBelakang(ImageSource.camera);
-                                      }),
-                                  ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title:
-                                          const Text("Ambil File Dari Gallery"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getBelakang(ImageSource.gallery);
-                                      })
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.upload,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          "UNGGAH FOTO",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _fotoBelakang,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Error";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const Divider(
-                      height: 30,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    const Text(
-                      "FOTO SAMPING KANAN",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    fotoKanan != null
-                        ? Image.file(
-                            fotoKanan!,
-                            fit: BoxFit.cover,
-                          )
-                        : _fotoKanan.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _fotoKanan.text,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 125,
-                              color: Colors.white,
-                              child: ListView(
-                                children: [
-                                  ListTile(
-                                      leading: const Icon(Icons.camera_alt),
-                                      title: const Text("Foto Dari Kamera"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getKanan(ImageSource.camera);
-                                      }),
-                                  ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title:
-                                          const Text("Ambil File Dari Gallery"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getKanan(ImageSource.gallery);
-                                      })
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.upload,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          "UNGGAH FOTO",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _fotoKanan,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Error";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    const Divider(
-                      height: 30,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    const Text(
-                      "FOTO SAMPING KIRI",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    fotoKiri != null
-                        ? Image.file(
-                            fotoKiri!,
-                            fit: BoxFit.cover,
-                          )
-                        : _fotoKiri.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _fotoKiri.text,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : const SizedBox(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 125,
-                              color: Colors.white,
-                              child: ListView(
-                                children: [
-                                  ListTile(
-                                      leading: const Icon(Icons.camera_alt),
-                                      title: const Text("Foto Dari Kamera"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getKiri(ImageSource.camera);
-                                      }),
-                                  ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title:
-                                          const Text("Ambil File Dari Gallery"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getKiri(ImageSource.gallery);
-                                      })
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.upload,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          "UNGGAH FOTO",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _fotoKiri,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Error";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    if (varNpwp == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      Text(
-                        _idJenisPemohon.text == "1" ? "NPWP" : "NPWP BADAN",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(height: 5),
                       TextFormField(
                         style: const TextStyle(fontSize: 13),
-                        controller: _noNpwp,
-                        decoration: InputDecoration(
-                          labelText: _idJenisPemohon.text == "1"
-                              ? "Nomor NPWP"
-                              : "Nomor NPWP Badan",
-                          labelStyle: const TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'NPWPD wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      npwpPemohon != null
-                          ? Image.file(
-                              npwpPemohon!,
-                              fit: BoxFit.cover,
-                            )
-                          : _dokNpwp.text != ""
-                              ? DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Image.network(
-                                    _dokNpwp.text,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return const Text('Loading foto...');
-                                    },
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : const SizedBox(),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Get.bottomSheet(
-                              Container(
-                                height: 125,
-                                color: Colors.white,
-                                child: ListView(
-                                  children: [
-                                    ListTile(
-                                        leading: const Icon(Icons.camera_alt),
-                                        title: const Text("Foto Dari Kamera"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getNpwp(ImageSource.camera);
-                                        }),
-                                    ListTile(
-                                        leading: const Icon(Icons.image),
-                                        title: const Text(
-                                            "Ambil File Dari Gallery"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getNpwp(ImageSource.gallery);
-                                        })
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH NPWP",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokNpwp,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokNpwp.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varNpwpd == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      Text(
-                        _idJenisPemohon.text == "1" ? "NPWPD" : "NPWPD BADAN",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _noNpwpd,
-                        decoration: InputDecoration(
-                          labelText: _idJenisPemohon.text == "1"
-                              ? "Nomor NPWPD"
-                              : "Nomor NPWPD Badan",
-                          labelStyle: const TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'NPWPD wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      npwpdPemohon != null
-                          ? Image.file(
-                              npwpdPemohon!,
-                              fit: BoxFit.cover,
-                            )
-                          : _dokNpwpd.text != ""
-                              ? DecoratedBox(
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Image.network(
-                                    _dokNpwpd.text,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context,
-                                        Object exception,
-                                        StackTrace? stackTrace) {
-                                      return const Text('Loading foto...');
-                                    },
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent? loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                )
-                              : const SizedBox(),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        height: 40,
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () {
-                            Get.bottomSheet(
-                              Container(
-                                height: 125,
-                                color: Colors.white,
-                                child: ListView(
-                                  children: [
-                                    ListTile(
-                                        leading: const Icon(Icons.camera_alt),
-                                        title: const Text("Foto Dari Kamera"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getNpwpd(ImageSource.camera);
-                                        }),
-                                    ListTile(
-                                        leading: const Icon(Icons.image),
-                                        title: const Text(
-                                            "Ambil File Dari Gallery"),
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                          getNpwpd(ImageSource.gallery);
-                                        })
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH NPWPD",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokNpwpd,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokNpwpd.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (_idJenisPemohon.text != "1") ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "AKTA PENDIRIAN PERUSAHAAN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _skBadan,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor Akta",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nomor Akta wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      dokumenAkta != null
-                          ? Wrap(
-                              children: dokumenAkta!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokAkta.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokAkta.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getAkta(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokAkta,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokAkta.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varNib == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "NOMOR INDUK BERUSAHA (NIB)",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _nib,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor NIB",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'NIB wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      dokumenNib != null
-                          ? Wrap(
-                              children: dokumenNib!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokNib.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokNib.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getNib(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokNib,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokNib.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (_idLahan.text == "1" || _idLahan.text == "2") ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "DOKUMEN LEGALITAS LAHAN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      legalitasLahan != null
-                          ? Wrap(
-                              children: legalitasLahan!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokLegal.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokLegal.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getLegalitasLahan(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokLegal,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokLegal.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (_idLahan.text == "2") ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "PERJANJIAN SEWA LAHAN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      dokumenSewa != null
-                          ? Wrap(
-                              children: dokumenSewa!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokSewa.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokSewa.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getSewa(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokSewa,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokSewa.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (_idLahan.text != "1" && _idLahan.text != "2") ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "DOKUMEN PEMANGKU JALAN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      dokumenPemangku != null
-                          ? Wrap(
-                              children: dokumenPemangku!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokPemangku.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokPemangku.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getPemangku(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokPemangku,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokPemangku.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varImb == 1) ...[
-                      const Divider(
-                        height: 40,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "IZIN MENDIRIKAN BANGUNAN (IMB)",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _noImb,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor IMB",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nomor IMB wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      dokumenImb != null
-                          ? Wrap(
-                              children: dokumenImb!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokImb.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokImb.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getImb(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokImb,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokImb.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varKkpr == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "DOKUMEN KKPR",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _noKkpr,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor KKPR",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nomor KKPR wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      dokumenKkpr != null
-                          ? Wrap(
-                              children: dokumenKkpr!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokKkpr.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokKkpr.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getKkpr(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokKkpr,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokKkpr.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varAsuransi == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "DOKUMEN ASURANSI",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      dokumenAsuransi != null
-                          ? Wrap(
-                              children: dokumenAsuransi!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokAsuransi.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokAsuransi.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getAsuransi(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokAsuransi,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokAsuransi.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (varFotoMateri == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "FOTO MATERI",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      fotoMateri != null
-                          ? Wrap(
-                              children: fotoMateri!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _fotoMateri.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_fotoMateri.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getMateri(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _fotoMateri,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_fotoMateri.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
-                    ],
-                    if (_idJenisPemohon.text == "3") ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "KONTRAK KERJASAMA",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _noKontrak,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Nomor SPK",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Nomor SPK wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _nilaiKontrak,
+                        controller: _luas,
                         keyboardType: TextInputType.number,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(
                               RegExp(r'(^-?\d*\.?\d*)'))
                         ],
                         decoration: const InputDecoration(
-                          labelText: "Nilai Kontrak",
+                          labelText: "LUAS BIDANG",
                           labelStyle: TextStyle(fontSize: 13),
-                          prefixText: "Rp. ",
+                          suffixText: "m\u00B2",
                         ),
+                        enabled: false,
                         validator: (value) {
                           if (value == "") {
-                            return 'Nilai kontrak wajib diisi';
+                            return 'Wajib diisi';
                           }
                           return null;
                         },
                       ),
-                      const SizedBox(height: 15),
-                      dokumenKontrak != null
-                          ? Wrap(
-                              children: dokumenKontrak!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokKontrak.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokKontrak.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getKontrak(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokKontrak,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      if (_dokKontrak.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ],
                     ],
-                    if (varSkPenunjukan == 1) ...[
-                      const Divider(
-                        height: 30,
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      const Text(
-                        "SK PENUNJUKAN",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+                    if (varTinggi == 1) ...[
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _tinggi,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'(^-?\d*\.?\d*)'))
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: "TINGGI",
+                          labelStyle: TextStyle(fontSize: 13),
+                          suffixText: "m",
                         ),
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Ukuran tinggi wajib diisi';
+                          }
+                          return null;
+                        },
                       ),
-                      const SizedBox(height: 15),
-                      dokumenLain != null
-                          ? Wrap(
-                              children: dokumenLain!.map((imageone) {
-                                return Card(
-                                  child: SizedBox(
-                                    height: 120,
-                                    width: 90,
-                                    child: Image.file(
-                                      File(imageone.path),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : _dokLain.text != ""
-                              ? Wrap(children: [
-                                  for (String im
-                                      in jsonDecode(_dokLain.text)) ...[
-                                    Card(
-                                      child: SizedBox(
-                                        height: 120,
-                                        width: 90,
-                                        child: Image.network(
-                                          im,
-                                          fit: BoxFit.cover,
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  loadingProgress) {
-                                            if (loadingProgress == null) {
-                                              return child;
-                                            }
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                value: loadingProgress
-                                                            .expectedTotalBytes !=
-                                                        null
-                                                    ? loadingProgress
-                                                            .cumulativeBytesLoaded /
-                                                        loadingProgress
-                                                            .expectedTotalBytes!
-                                                    : null,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  ]
-                                ])
-                              : const SizedBox(),
-                      const SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 40,
-                        child: ElevatedButton.icon(
-                          onPressed: () => getLain(),
-                          icon: const Icon(
-                            Icons.upload,
-                            size: 18,
-                          ),
-                          label: const Text(
-                            "UNGGAH DOKUMEN",
-                            style: TextStyle(fontSize: 13),
-                          ),
+                    ],
+                    if (varDiameterTiang == 1) ...[
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _diameter,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'(^-?\d*\.?\d*)'))
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: "DIAMETER TIANG",
+                          labelStyle: TextStyle(fontSize: 13),
+                          suffixText: "cm",
                         ),
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Diameter tiang wajib diisi';
+                          }
+                          return null;
+                        },
                       ),
-                      Visibility(
-                        visible: false,
-                        maintainState: true,
-                        child: TextFormField(
-                          controller: _dokLain,
-                          validator: (value) {
-                            if (value == "") {
-                              return "Error";
-                            }
-                            return null;
-                          },
+                    ],
+                    if (varLembar == 1) ...[
+                      const SizedBox(height: 5),
+                      TextFormField(
+                        style: const TextStyle(fontSize: 13),
+                        controller: _lembar,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: "LEMBAR",
+                          labelStyle: TextStyle(fontSize: 13),
+                          suffixText: "lembar",
                         ),
+                        validator: (value) {
+                          if (value == "") {
+                            return 'Jumlah lembar wajib diisi';
+                          }
+                          return null;
+                        },
                       ),
-                      if (_dokLain.text == "") ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          "Dokumen wajib diisi",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 12,
+                    ],
+                    if (varSisi == 1) ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<Map<String, dynamic>>(
+                        items: const [
+                          {"id": 1, "sisi": "1 SISI"},
+                          {"id": 2, "sisi": "2 SISI"},
+                          {"id": 3, "sisi": "3 SISI"},
+                          {"id": 4, "sisi": "4 SISI"},
+                        ],
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "SISI / SUDUT PANDANG",
+                            labelStyle: TextStyle(fontSize: 13),
                           ),
                         ),
+                        onChanged: (value) {
+                          setState(() {
+                            _sisi.text = value?["id"].toString() as String;
+                            _sisiReklame.text = value?["sisi"] ?? "";
+                          });
+                        },
+                        selectedItem: {
+                          "id": _sisi.text,
+                          "sisi": _sisiReklame.text,
+                        },
+                        popupProps: PopupProps.menu(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              item["sisi"],
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?["sisi"] ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?["id"] == "") {
+                            return 'Jumlah sisi Wajib Diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                    const SizedBox(height: 5),
+                    DropdownSearch<Map<String, dynamic>>(
+                      items: const [
+                        {"posisi": "HORIZONTAL"},
+                        {"posisi": "VERTIKAL"},
                       ],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "POSISI",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _posisi.text = value?["posisi"].toString() as String;
+                        });
+                      },
+                      selectedItem: {
+                        "posisi": _posisi.text,
+                      },
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item["posisi"],
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?["posisi"] ?? "",
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value?["posisi"] == "") {
+                          return 'Posisi pemasangan Wajib Diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    if (varLahan == 1) ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<LahanModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/lahan?key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List lahan = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<LahanModels> lahanList = [];
+
+                            for (var element in lahan) {
+                              lahanList.add(LahanModels.fromJson(element));
+                            }
+
+                            return lahanList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              '${item.lahan}',
+                              style: const TextStyle(fontSize: 13),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "STATUS LAHAN",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            _idLahan.text = value?.id.toString() as String;
+                            _namaLahan.text = value?.lahan ?? "";
+                          });
+                        },
+                        selectedItem: LahanModels(
+                          id: int.tryParse(_idLahan.text),
+                          lahan: _namaLahan.text,
+                        ),
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.lahan ?? "",
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                        validator: (value) {
+                          if (value?.lahan == "") {
+                            return 'Status lahan wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
                     ],
                     const Divider(
-                      height: 30,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _catatan,
-                      maxLines: 2,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Catatan Permohonan",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    const Divider(
-                      height: 30,
+                      height: 50,
                       thickness: 1,
                       color: Colors.black,
                     ),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
-                        onPressed: () async {
-                          if (_dokumenKey.currentState!.validate()) {
-                            Get.dialog(
-                              Container(
+                        onPressed: () {
+                          if (_permohonanKey.currentState!.validate()) {
+                            setState(() {
+                              currentStep++;
+                            });
+                          } else {
+                            errorPesan("ISIAN DATA BELUM LENGKAP");
+                          }
+                        },
+                        label: const Text('SELANJUTNYA'),
+                        icon: const Icon(Icons.check),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          minimumSize: const Size(double.infinity, 50),
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          Step(
+            isActive: currentStep >= 2,
+            state: currentStep >= 2 ? StepState.disabled : StepState.complete,
+            title: const Text("DOKUMEN"),
+            subtitle: const Text(
+              "DOKUMEN PERMOHONAN IZIN REKLAME",
+              style: TextStyle(fontSize: 10),
+            ),
+            content: Form(
+              key: _dokumenKey,
+              child: Column(
+                children: [
+                  const Text(
+                    "FOTO TAMPAK DEPAN",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  fotoDepan != null
+                      ? Image.file(
+                          fotoDepan!,
+                          fit: BoxFit.cover,
+                        )
+                      : _fotoDepan.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _fotoDepan.text,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(
+                          Container(
+                            height: 125,
+                            color: Colors.white,
+                            child: ListView(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text("Foto Dari Kamera"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getDepan(ImageSource.camera);
+                                    }),
+                                ListTile(
+                                    leading: const Icon(Icons.image),
+                                    title:
+                                        const Text("Ambil File Dari Gallery"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getDepan(ImageSource.gallery);
+                                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.upload,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        "UNGGAH FOTO",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _fotoDepan,
+                      validator: (value) {
+                        if (value == "") {
+                          const Text("Foto wajib diisi");
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  const Text(
+                    "FOTO TAMPAK BELAKANG",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  fotoBelakang != null
+                      ? Image.file(
+                          fotoBelakang!,
+                          fit: BoxFit.cover,
+                        )
+                      : _fotoBelakang.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _fotoBelakang.text,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(
+                          Container(
+                            height: 125,
+                            color: Colors.white,
+                            child: ListView(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text("Foto Dari Kamera"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getBelakang(ImageSource.camera);
+                                    }),
+                                ListTile(
+                                    leading: const Icon(Icons.image),
+                                    title:
+                                        const Text("Ambil File Dari Gallery"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getBelakang(ImageSource.gallery);
+                                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.upload,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        "UNGGAH FOTO",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _fotoBelakang,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Error";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  const Text(
+                    "FOTO SAMPING KANAN",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  fotoKanan != null
+                      ? Image.file(
+                          fotoKanan!,
+                          fit: BoxFit.cover,
+                        )
+                      : _fotoKanan.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _fotoKanan.text,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(
+                          Container(
+                            height: 125,
+                            color: Colors.white,
+                            child: ListView(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text("Foto Dari Kamera"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getKanan(ImageSource.camera);
+                                    }),
+                                ListTile(
+                                    leading: const Icon(Icons.image),
+                                    title:
+                                        const Text("Ambil File Dari Gallery"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getKanan(ImageSource.gallery);
+                                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.upload,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        "UNGGAH FOTO",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _fotoKanan,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Error";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  const Text(
+                    "FOTO SAMPING KIRI",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  fotoKiri != null
+                      ? Image.file(
+                          fotoKiri!,
+                          fit: BoxFit.cover,
+                        )
+                      : _fotoKiri.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _fotoKiri.text,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : const SizedBox(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(
+                          Container(
+                            height: 125,
+                            color: Colors.white,
+                            child: ListView(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text("Foto Dari Kamera"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getKiri(ImageSource.camera);
+                                    }),
+                                ListTile(
+                                    leading: const Icon(Icons.image),
+                                    title:
+                                        const Text("Ambil File Dari Gallery"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getKiri(ImageSource.gallery);
+                                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.upload,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        "UNGGAH FOTO",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _fotoKiri,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Error";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  if (varNpwp == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      _idJenisPemohon.text == "1" ? "NPWP" : "NPWP BADAN",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _noNpwp,
+                      decoration: InputDecoration(
+                        labelText: _idJenisPemohon.text == "1"
+                            ? "NOMOR NPWP"
+                            : "NOMOR NPWP BADAN",
+                        labelStyle: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'NPWPD wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    npwpPemohon != null
+                        ? Image.file(
+                            npwpPemohon!,
+                            fit: BoxFit.cover,
+                          )
+                        : _dokNpwp.text != ""
+                            ? DecoratedBox(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Image.network(
+                                  _dokNpwp.text,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Text('Loading foto...');
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : const SizedBox(),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Get.bottomSheet(
+                            Container(
+                              height: 125,
+                              color: Colors.white,
+                              child: ListView(
+                                children: [
+                                  ListTile(
+                                      leading: const Icon(Icons.camera_alt),
+                                      title: const Text("Foto Dari Kamera"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getNpwp(ImageSource.camera);
+                                      }),
+                                  ListTile(
+                                      leading: const Icon(Icons.image),
+                                      title:
+                                          const Text("Ambil File Dari Gallery"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getNpwp(ImageSource.gallery);
+                                      })
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH NPWP",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokNpwp,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokNpwp.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varNpwpd == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    Text(
+                      _idJenisPemohon.text == "1" ? "NPWPD" : "NPWPD BADAN",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _noNpwpd,
+                      decoration: InputDecoration(
+                        labelText: _idJenisPemohon.text == "1"
+                            ? "NOMOR NPWPD"
+                            : "NOMOR NPWPD Badan",
+                        labelStyle: const TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'NPWPD wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    npwpdPemohon != null
+                        ? Image.file(
+                            npwpdPemohon!,
+                            fit: BoxFit.cover,
+                          )
+                        : _dokNpwpd.text != ""
+                            ? DecoratedBox(
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Image.network(
+                                  _dokNpwpd.text,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return const Text('Loading foto...');
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes!
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : const SizedBox(),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Get.bottomSheet(
+                            Container(
+                              height: 125,
+                              color: Colors.white,
+                              child: ListView(
+                                children: [
+                                  ListTile(
+                                      leading: const Icon(Icons.camera_alt),
+                                      title: const Text("Foto Dari Kamera"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getNpwpd(ImageSource.camera);
+                                      }),
+                                  ListTile(
+                                      leading: const Icon(Icons.image),
+                                      title:
+                                          const Text("Ambil File Dari Gallery"),
+                                      onTap: () {
+                                        Navigator.of(context).pop();
+                                        getNpwpd(ImageSource.gallery);
+                                      })
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH NPWPD",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokNpwpd,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokNpwpd.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varNib == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "NOMOR INDUK BERUSAHA (NIB)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _nib,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR NIB",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'NIB wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    dokumenNib != null
+                        ? Wrap(
+                            children: dokumenNib!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokNib.text != ""
+                            ? Wrap(children: [
+                                for (String im in jsonDecode(_dokNib.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getNib(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokNib,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokNib.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (_idJenisPemohon.text != "1") ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "AKTA PENDIRIAN PERUSAHAAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _skBadan,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR AKTA",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nomor Akta wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenAkta != null
+                        ? Wrap(
+                            children: dokumenAkta!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokAkta.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokAkta.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getAkta(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokAkta,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokAkta.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (_idLahan.text == "1" || _idLahan.text == "2") ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "DOKUMEN LEGALITAS LAHAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    legalitasLahan != null
+                        ? Wrap(
+                            children: legalitasLahan!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokLegal.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokLegal.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getLegalitasLahan(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokLegal,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokLegal.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (_idLahan.text == "2") ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "PERJANJIAN SEWA LAHAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenSewa != null
+                        ? Wrap(
+                            children: dokumenSewa!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokSewa.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokSewa.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getSewa(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokSewa,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokSewa.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (_idLahan.text != "1" && _idLahan.text != "2") ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "DOKUMEN PEMANGKU JALAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenPemangku != null
+                        ? Wrap(
+                            children: dokumenPemangku!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokPemangku.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokPemangku.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getPemangku(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokPemangku,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokPemangku.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varImb == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "IZIN MENDIRIKAN BANGUNAN (IMB)",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _noImb,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR IMB",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nomor IMB wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    dokumenImb != null
+                        ? Wrap(
+                            children: dokumenImb!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokImb.text != ""
+                            ? Wrap(children: [
+                                for (String im in jsonDecode(_dokImb.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getImb(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokImb,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokImb.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varKkpr == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "DOKUMEN KKPR",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _noKkpr,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR KKPR",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nomor KKPR wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenKkpr != null
+                        ? Wrap(
+                            children: dokumenKkpr!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokKkpr.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokKkpr.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getKkpr(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokKkpr,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokKkpr.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varAsuransi == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "DOKUMEN ASURANSI",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenAsuransi != null
+                        ? Wrap(
+                            children: dokumenAsuransi!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokAsuransi.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokAsuransi.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getAsuransi(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokAsuransi,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokAsuransi.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varFotoMateri == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "FOTO MATERI",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    fotoMateri != null
+                        ? Wrap(
+                            children: fotoMateri!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _fotoMateri.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_fotoMateri.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getMateri(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _fotoMateri,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_fotoMateri.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (_idJenisPemohon.text == "3") ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "KONTRAK KERJASAMA",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _noKontrak,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "NOMOR SPK",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nomor SPK wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      style: const TextStyle(fontSize: 13),
+                      controller: _nilaiKontrak,
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'(^-?\d*\.?\d*)'))
+                      ],
+                      decoration: const InputDecoration(
+                        labelText: "NILAI KONTRAK",
+                        labelStyle: TextStyle(fontSize: 13),
+                        prefixText: "Rp. ",
+                      ),
+                      validator: (value) {
+                        if (value == "") {
+                          return 'Nilai kontrak wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenKontrak != null
+                        ? Wrap(
+                            children: dokumenKontrak!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokKontrak.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokKontrak.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getKontrak(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokKontrak,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokKontrak.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  if (varSkPenunjukan == 1) ...[
+                    const Divider(
+                      height: 30,
+                      thickness: 1,
+                      color: Colors.black,
+                    ),
+                    const Text(
+                      "SK PENUNJUKAN",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 5),
+                    dokumenLain != null
+                        ? Wrap(
+                            children: dokumenLain!.map((imageone) {
+                              return Card(
+                                child: SizedBox(
+                                  height: 120,
+                                  width: 90,
+                                  child: Image.file(
+                                    File(imageone.path),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                          )
+                        : _dokLain.text != ""
+                            ? Wrap(children: [
+                                for (String im
+                                    in jsonDecode(_dokLain.text)) ...[
+                                  Card(
+                                    child: SizedBox(
+                                      height: 120,
+                                      width: 90,
+                                      child: Image.network(
+                                        im,
+                                        fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child;
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              value: loadingProgress
+                                                          .expectedTotalBytes !=
+                                                      null
+                                                  ? loadingProgress
+                                                          .cumulativeBytesLoaded /
+                                                      loadingProgress
+                                                          .expectedTotalBytes!
+                                                  : null,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                              ])
+                            : const SizedBox(),
+                    const SizedBox(height: 5),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: () => getLain(),
+                        icon: const Icon(
+                          Icons.upload,
+                          size: 18,
+                        ),
+                        label: const Text(
+                          "UNGGAH DOKUMEN",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: false,
+                      maintainState: true,
+                      child: TextFormField(
+                        controller: _dokLain,
+                        validator: (value) {
+                          if (value == "") {
+                            return "Error";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    if (_dokLain.text == "")
+                      const Text(
+                        "Dokumen wajib diisi",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                        ),
+                      ),
+                  ],
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _catatan,
+                    maxLines: 2,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "CATATAN PERMOHONAN",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                  ),
+                  const Divider(
+                    height: 30,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        if (_dokumenKey.currentState!.validate()) {
+                          Get.dialog(
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Container(
                                 color: Colors.white,
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
@@ -5245,7 +5160,7 @@ class _SIPRState extends State<SIPR> {
                                               if (response.statusCode == 200) {
                                                 hapusLoader();
                                                 pesanData(
-                                                    "Permohonan Izin Reklame Berhasil Dikirim");
+                                                    "PERMOHONA IZIN REKLAME BERHASIL DIKIRIM");
                                                 Get.offAllNamed("/home");
                                               } else {
                                                 hapusLoader();
@@ -5254,7 +5169,7 @@ class _SIPRState extends State<SIPR> {
                                             } else {
                                               hapusLoader();
                                               errorPesan(
-                                                  "Silahkan melengkapi semua data");
+                                                  "ISIAN DATA BELUM LENGKAP");
                                             }
                                           },
                                           label: const Text('KIRIM PERMOHONAN'),
@@ -5270,23 +5185,26 @@ class _SIPRState extends State<SIPR> {
                                   ),
                                 ),
                               ),
-                            );
-                          }
-                        },
-                        label: const Text('KIRIM PERMOHONAN'),
-                        icon: const Icon(Icons.check),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          minimumSize: const Size(double.infinity, 50),
-                        ),
+                            ),
+                          );
+                        } else {
+                          hapusLoader();
+                          errorPesan("ISIAN DATA BELUM LENGKAP");
+                        }
+                      },
+                      label: const Text('KIRIM PERMOHONAN'),
+                      icon: const Icon(Icons.check),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size(double.infinity, 50),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -5294,7 +5212,7 @@ class _SIPRState extends State<SIPR> {
   Widget buildPerusahaan() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -5306,7 +5224,7 @@ class _SIPRState extends State<SIPR> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           DropdownSearch<BentukBadanKkprModels>(
             asyncItems: (String filter) async {
               var response = await http.get(
@@ -5341,7 +5259,7 @@ class _SIPRState extends State<SIPR> {
             ),
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: "Bentuk Badan",
+                labelText: "BENTUK BADAN",
                 labelStyle: TextStyle(fontSize: 13),
               ),
             ),
@@ -5357,9 +5275,7 @@ class _SIPRState extends State<SIPR> {
             ),
             dropdownBuilder: (context, selectedItem) => Text(
               selectedItem?.ket ?? "",
-              style: const TextStyle(
-                fontSize: 13,
-              ),
+              style: const TextStyle(fontSize: 13),
             ),
             validator: (value) {
               if (value?.ket == "") {
@@ -5374,7 +5290,7 @@ class _SIPRState extends State<SIPR> {
             controller: _namaBadan,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Nama Perusahaan Tanpa Bentuk Badan",
+              labelText: "NAMA PERUSAHAAN TANPA BENTUK BADAN",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {
@@ -5390,7 +5306,7 @@ class _SIPRState extends State<SIPR> {
             controller: _alamatBadan,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Alamat Jalan",
+              labelText: "ALAMAT BADAN JALAN",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {
@@ -5406,7 +5322,7 @@ class _SIPRState extends State<SIPR> {
             controller: _dusunBadan,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Dusun / Lingkungan",
+              labelText: "DUSUN / LINGKUNGAN",
               labelStyle: TextStyle(fontSize: 13),
             ),
           ),
@@ -5483,7 +5399,7 @@ class _SIPRState extends State<SIPR> {
             ),
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: "Propinsi",
+                labelText: "PROPINSI",
                 labelStyle: TextStyle(fontSize: 13),
               ),
             ),
@@ -5505,9 +5421,7 @@ class _SIPRState extends State<SIPR> {
             ),
             dropdownBuilder: (context, selectedItem) => Text(
               selectedItem?.namaProp ?? "",
-              style: const TextStyle(
-                fontSize: 13,
-              ),
+              style: const TextStyle(fontSize: 13),
             ),
             validator: (value) {
               if (value?.noProp == "") {
@@ -5552,7 +5466,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
-                  labelText: "Kota",
+                  labelText: "KOTA",
                   labelStyle: TextStyle(fontSize: 13),
                 ),
               ),
@@ -5573,9 +5487,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownBuilder: (context, selectedItem) => Text(
                 selectedItem?.namaKab ?? "",
-                style: const TextStyle(
-                  fontSize: 13,
-                ),
+                style: const TextStyle(fontSize: 13),
               ),
               validator: (value) {
                 if (value?.noKab == "") {
@@ -5621,7 +5533,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
-                  labelText: "Kecamatan",
+                  labelText: "KECAMATAN",
                   labelStyle: TextStyle(fontSize: 13),
                 ),
               ),
@@ -5640,9 +5552,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownBuilder: (context, selectedItem) => Text(
                 selectedItem?.namaKec ?? "",
-                style: const TextStyle(
-                  fontSize: 13,
-                ),
+                style: const TextStyle(fontSize: 13),
               ),
               validator: (value) {
                 if (value?.noKec == "") {
@@ -5690,7 +5600,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownDecoratorProps: const DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
-                  labelText: "Desa/Kelurahan",
+                  labelText: "DESA / KELURAHAN",
                   labelStyle: TextStyle(fontSize: 13),
                 ),
               ),
@@ -5706,9 +5616,7 @@ class _SIPRState extends State<SIPR> {
               ),
               dropdownBuilder: (context, selectedItem) => Text(
                 selectedItem?.namaKel ?? "",
-                style: const TextStyle(
-                  fontSize: 13,
-                ),
+                style: const TextStyle(fontSize: 13),
               ),
               validator: (value) {
                 if (value?.noKel == "") {
@@ -5723,13 +5631,13 @@ class _SIPRState extends State<SIPR> {
             style: const TextStyle(fontSize: 13),
             controller: _latPemohon,
             decoration: const InputDecoration(
-              labelText: "Latitude",
+              labelText: "GARIS LINTANG",
               labelStyle: TextStyle(fontSize: 13),
             ),
             enabled: false,
             validator: (value) {
               if (value == "") {
-                return 'Kordinat latitude wajib diisi';
+                return 'Garis Lintang wajib diisi';
               }
               return null;
             },
@@ -5739,18 +5647,18 @@ class _SIPRState extends State<SIPR> {
             style: const TextStyle(fontSize: 13),
             controller: _lngPemohon,
             decoration: const InputDecoration(
-              labelText: "Longitude",
+              labelText: "GARIS BUJUR",
               labelStyle: TextStyle(fontSize: 13),
             ),
             enabled: false,
             validator: (value) {
               if (value == "") {
-                return 'Kordinat longitude wajib diisi';
+                return 'Garis Bujur wajib diisi';
               }
               return null;
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           SizedBox(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -5758,11 +5666,10 @@ class _SIPRState extends State<SIPR> {
               children: [
                 Center(
                   child: SizedBox(
-                    height: 40,
                     width: double.infinity,
                     child: ElevatedButton.icon(
                       label: const Text(
-                        'TENTUKAN KORDINAT KANTOR',
+                        'KOORDINAT KANTOR',
                         style: TextStyle(fontSize: 13),
                       ),
                       icon: const Icon(
@@ -5790,7 +5697,7 @@ class _SIPRState extends State<SIPR> {
             ),
           ),
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -5808,7 +5715,7 @@ class _SIPRState extends State<SIPR> {
             controller: _jabatanPemohon,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Jabatan Pemohon",
+              labelText: "JABATAN PEMOHON",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {

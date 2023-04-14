@@ -5,18 +5,21 @@ import 'package:http/http.dart' as http;
 String? idUser;
 
 class ApiContainer {
-  static String baseUrl = 'https://nonoss.multimaxima.com';
-  //static String baseUrl = 'https://nonoss.banyuwangikab.go.id';
   static String baseKey =
       'be6j3ojtLzgAlC7LnDMg1X2ZgtvWzxm2X6iGs99Uzww0rCYtz1HrfBbNVWictUy3GZkgowmWnfcmu3oVR6obqayffcnIoee06HoC';
-  static String smartUrl = "https://smartkampung.id";
-  //static String smartUrl = "smartkampung.id ke smartdev.banyuwangikab.go.id";
+
+  //static String baseUrl = 'https://nonoss.multimaxima.com';
+  //static String baseUrl = 'https://nonoss.banyuwangikab.go.id';
+  static String baseUrl = 'https://nonossdev.banyuwangikab.go.id';
+
+  //static String smartUrl = "https://smartkampung.id";
+  static String smartUrl = "https://smartdev.banyuwangikab.go.id";
 }
 
 Future getUserId() async {
   // final prefs = await SharedPreferences.getInstance();
   // String userId = prefs.getString('uid') ?? '';
-  String userId = "LHcvODr6EJTL9rdmokp3dkqBdM22";
+  String userId = "9XYZFEU5esZvSvCNHdUw985WJ4t2";
   //String userId = "lNL9gWbs2Eg2oHdmdm78AWrxMQw2";
   return userId;
 }
@@ -24,7 +27,7 @@ Future getUserId() async {
 Future getUserDetil() async {
   // final prefs = await SharedPreferences.getInstance();
   // String userId = prefs.getString('uid') ?? '';
-  String userId = "LHcvODr6EJTL9rdmokp3dkqBdM22";
+  String userId = "9XYZFEU5esZvSvCNHdUw985WJ4t2";
   //String userId = "lNL9gWbs2Eg2oHdmdm78AWrxMQw2";
 
   var result = await http.get(Uri.parse(
@@ -35,7 +38,7 @@ Future getUserDetil() async {
 Future getUserNakes() async {
   // final prefs = await SharedPreferences.getInstance();
   // String userId = prefs.getString('uid') ?? '';
-  String userId = "LHcvODr6EJTL9rdmokp3dkqBdM22";
+  String userId = "9XYZFEU5esZvSvCNHdUw985WJ4t2";
   //String userId = "lNL9gWbs2Eg2oHdmdm78AWrxMQw2";
 
   var result = await http.get(Uri.parse(

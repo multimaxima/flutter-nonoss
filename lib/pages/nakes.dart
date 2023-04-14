@@ -227,7 +227,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -249,7 +248,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -270,7 +268,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -291,7 +288,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -312,7 +308,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -333,7 +328,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -354,7 +348,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -375,7 +368,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -396,7 +388,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -417,7 +408,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -438,7 +428,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -459,7 +448,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -480,7 +468,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -501,7 +488,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -522,7 +508,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -543,7 +528,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -564,7 +548,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -585,7 +568,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -606,7 +588,6 @@ class _NakesState extends State<Nakes> {
         });
       } else {
         hapusLoader();
-        errorPesan("Tidak ada gambar yang dipilih");
       }
     } catch (e) {
       hapusLoader();
@@ -846,182 +827,1485 @@ class _NakesState extends State<Nakes> {
         title: const ListTile(
           contentPadding: EdgeInsets.all(0),
           title: Text(
-            "NAKES",
+            "TENAGA KESEHATAN",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
           subtitle: Text(
-            "Izin Tenaga Kesehatan",
+            "PERMOHONAN IZIN TENAGA KESEHATAN",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 10,
             ),
           ),
         ),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 0, 135, 45),
-                  Color.fromARGB(255, 255, 255, 255),
-                ],
-                begin: FractionalOffset(0.0, 0.0),
-                end: FractionalOffset(0.0, 1.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp),
-          ),
-        ),
-        foregroundColor: Colors.black87,
-        bottomOpacity: 0.0,
-        elevation: 1.0,
+        // flexibleSpace: Container(
+        //   decoration: const BoxDecoration(
+        //     gradient: LinearGradient(
+        //         colors: [
+        //           Color.fromARGB(255, 0, 135, 45),
+        //           Color.fromARGB(255, 255, 255, 255),
+        //         ],
+        //         begin: FractionalOffset(0.0, 0.0),
+        //         end: FractionalOffset(0.0, 1.0),
+        //         stops: [0.0, 1.0],
+        //         tileMode: TileMode.clamp),
+        //   ),
+        // ),
+        // foregroundColor: Colors.black87,
+        // bottomOpacity: 0.0,
+        // elevation: 1.0,
         titleTextStyle: const TextStyle(
           fontSize: 15,
         ),
       ),
-      body: Theme(
-        data: Theme.of(context).copyWith(
-          colorScheme: const ColorScheme.light(
-            primary: Colors.blue,
-          ),
-        ),
-        child: Stepper(
-          controlsBuilder: (context, details) {
-            return const SizedBox();
-          },
-          currentStep: currentStep,
-          steps: [
-            Step(
-              isActive: currentStep >= 0,
-              state: currentStep >= 0 ? StepState.disabled : StepState.complete,
-              title: const Text("DATA PEMOHON"),
-              subtitle: const Text("Data Profil Pemohon"),
-              content: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Text(
-                      "PAS FOTO PEMOHON\n(UNTUK SK)",
-                      textAlign: TextAlign.center,
+      body: Stepper(
+        controlsBuilder: (context, details) {
+          return const SizedBox();
+        },
+        currentStep: currentStep,
+        steps: [
+          Step(
+            isActive: currentStep >= 0,
+            state: currentStep >= 0 ? StepState.disabled : StepState.complete,
+            title: const Text("PEMOHON"),
+            subtitle: const Text(
+              "DATA LENGKAP PROFIL PEMOHON",
+              style: TextStyle(fontSize: 10),
+            ),
+            content: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  const Text(
+                    "PAS FOTO PEMOHON\n(UNTUK SK)",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
-                    const SizedBox(height: 10),
-                    fotoPemohon != null
-                        ? Image.file(
-                            fotoPemohon!,
-                            width: 150,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          )
-                        : _fotoPemohon.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _fotoPemohon.text,
-                                  height: 200,
-                                  width: 150,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Image.asset(
-                                'assets/images/noimage.jpg',
+                  ),
+                  const SizedBox(height: 10),
+                  fotoPemohon != null
+                      ? Image.file(
+                          fotoPemohon!,
+                          width: 150,
+                          height: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : _fotoPemohon.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _fotoPemohon.text,
                                 height: 200,
                                 width: 150,
                                 fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
                               ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      height: 40,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(
-                            Container(
-                              height: 125,
-                              color: Colors.white,
-                              child: ListView(
-                                children: [
-                                  ListTile(
-                                      leading: const Icon(Icons.camera_alt),
-                                      title: const Text("Foto Dari Kamera"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getFoto(ImageSource.camera);
-                                      }),
-                                  ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title:
-                                          const Text("Ambil File Dari Gallery"),
-                                      onTap: () {
-                                        Navigator.of(context).pop();
-                                        getFoto(ImageSource.gallery);
-                                      })
-                                ],
-                              ),
+                            )
+                          : Image.asset(
+                              'assets/images/noimage.jpg',
+                              height: 200,
+                              width: 150,
+                              fit: BoxFit.cover,
                             ),
-                          );
-                        },
-                        icon: const Icon(Icons.upload, size: 18),
-                        label: const Text(
-                          "UNGGAH FOTO",
-                          style: TextStyle(
-                            fontSize: 13,
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(
+                          Container(
+                            height: 125,
+                            color: Colors.white,
+                            child: ListView(
+                              children: [
+                                ListTile(
+                                    leading: const Icon(Icons.camera_alt),
+                                    title: const Text("Foto Dari Kamera"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getFoto(ImageSource.camera);
+                                    }),
+                                ListTile(
+                                    leading: const Icon(Icons.image),
+                                    title:
+                                        const Text("Ambil File Dari Gallery"),
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                      getFoto(ImageSource.gallery);
+                                    })
+                              ],
+                            ),
                           ),
+                        );
+                      },
+                      icon: const Icon(Icons.upload, size: 18),
+                      label: const Text(
+                        "UNGGAH FOTO",
+                        style: TextStyle(
+                          fontSize: 13,
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _fotoPemohon,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Error";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    if (_fotoPemohon.text == '') const Text("Foto wajib diisi"),
-                    const SizedBox(height: 25),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _namaPemohon,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Nama Lengkap Pemohon",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _fotoPemohon,
                       validator: (value) {
                         if (value == "") {
-                          return 'Nama pemohon wajib diisi';
+                          return "Error";
                         }
                         return null;
                       },
                     ),
+                  ),
+                  if (_fotoPemohon.text == '')
+                    const Text(
+                      "FOTO WAJIB DIISI",
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                    ),
+                  const SizedBox(height: 25),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _namaPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "NAMA LENGKAP PEMOHON",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Nama pemohon wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            style: const TextStyle(fontSize: 13),
+                            controller: _gelarDepan,
+                            decoration: const InputDecoration(
+                              labelText: "GELAR DEPAN",
+                              labelStyle: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: TextFormField(
+                            style: const TextStyle(fontSize: 13),
+                            controller: _gelarBelakang,
+                            decoration: const InputDecoration(
+                              labelText: "GELAR BELAKANG",
+                              labelStyle: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _alamatPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "ALAMAT RUMAH JALAN",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _dusunPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "DUSUN / LINGKUNGAN",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            style: const TextStyle(fontSize: 13),
+                            controller: _rtPemohon,
+                            decoration: const InputDecoration(
+                              labelText: "RT",
+                              labelStyle: TextStyle(fontSize: 13),
+                            ),
+                            validator: (value) {
+                              if (value == "") {
+                                return 'RT wajib diisi';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: TextFormField(
+                            style: const TextStyle(fontSize: 13),
+                            controller: _rwPemohon,
+                            decoration: const InputDecoration(
+                              labelText: "RW",
+                              labelStyle: TextStyle(fontSize: 13),
+                            ),
+                            validator: (value) {
+                              if (value == "") {
+                                return 'RW wajib diisi';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  DropdownSearch<PropinsiModels>(
+                    asyncItems: (String filter) async {
+                      var response = await http.get(
+                        Uri.parse(
+                            "$baseUrl/api/propinsi?key=${ApiContainer.baseKey}"),
+                      );
+
+                      if (response.statusCode != 200) {
+                        errorData();
+                        return [];
+                      } else {
+                        List propinsi = (json.decode(response.body)
+                            as Map<String, dynamic>)["data"];
+
+                        List<PropinsiModels> propinsiList = [];
+
+                        for (var element in propinsi) {
+                          propinsiList.add(PropinsiModels.fromJson(element));
+                        }
+
+                        return propinsiList;
+                      }
+                    },
+                    popupProps: PopupProps.dialog(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          '${item.namaProp}',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "PROPINSI",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _nopropPemohon.text = value?.noProp ?? "";
+                        _propinsiPemohon.text = value?.namaProp ?? "";
+                        _nokabPemohon.text = "";
+                        _kotaPemohon.text = "";
+                        _nokecPemohon.text = "";
+                        _kecamatanPemohon.text = "";
+                        _nokelPemohon.text = "";
+                        _desaPemohon.text = "";
+                      });
+                    },
+                    selectedItem: PropinsiModels(
+                      noProp: _nopropPemohon.text,
+                      namaProp: _propinsiPemohon.text,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?.namaProp ?? "",
+                      style: const TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?.noProp == "") {
+                        return 'Propinsi tempat tinggal wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (_nopropPemohon.text != "") ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<KotaModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/kota?no_prop=${_nopropPemohon.text}&key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List kota = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<KotaModels> kotaList = [];
+
+                          for (var element in kota) {
+                            kotaList.add(KotaModels.fromJson(element));
+                          }
+
+                          return kotaList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.namaKab}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "KOTA",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nokabPemohon.text = value?.noKab ?? "";
+                          _kotaPemohon.text = value?.namaKab ?? "";
+
+                          _nokecPemohon.text = "";
+                          _kecamatanPemohon.text = "";
+                          _nokelPemohon.text = "";
+                          _desaPemohon.text = "";
+                        });
+                      },
+                      selectedItem: KotaModels(
+                        noKab: _nokabPemohon.text,
+                        namaKab: _kotaPemohon.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.namaKab ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.noKab == "") {
+                          return 'Kota tempat tinggal wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  if (_nopropPemohon.text != "" &&
+                      _nokabPemohon.text != "") ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<KecamatanModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/kecamatan?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List kecamatan = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<KecamatanModels> kecamatanList = [];
+
+                          for (var element in kecamatan) {
+                            kecamatanList
+                                .add(KecamatanModels.fromJson(element));
+                          }
+
+                          return kecamatanList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.namaKec}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "KECAMATAN",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nokecPemohon.text = value?.noKec ?? "";
+                          _kecamatanPemohon.text = value?.namaKec ?? "";
+
+                          _nokelPemohon.text = "";
+                          _desaPemohon.text = "";
+                        });
+                      },
+                      selectedItem: KecamatanModels(
+                        noKec: _nokecPemohon.text,
+                        namaKec: _kecamatanPemohon.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.namaKec ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.noKec == "") {
+                          return 'Kecamatan tempat tinggal wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  if (_nopropPemohon.text != "" &&
+                      _nokabPemohon.text != "" &&
+                      _nokecPemohon.text != "") ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<DesaModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/desa?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&no_kec=${_nokecPemohon.text}&key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List desa = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<DesaModels> desaList = [];
+
+                          for (var element in desa) {
+                            desaList.add(DesaModels.fromJson(element));
+                          }
+
+                          return desaList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.namaKel}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "DESA / KELURAHAN",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _nokelPemohon.text = value?.noKel ?? "";
+                          _desaPemohon.text = value?.namaKel ?? "";
+                        });
+                      },
+                      selectedItem: DesaModels(
+                        noKel: _nokelPemohon.text,
+                        namaKel: _desaPemohon.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.namaKel ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.noKel == "") {
+                          return 'Desa/Kelurahan tempat tinggal wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _kodeposPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "KODE POS",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _latPemohon,
+                    decoration: const InputDecoration(
+                      labelText: "GARIS LINTANG",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    enabled: false,
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Garis Lintang wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _lngPemohon,
+                    decoration: const InputDecoration(
+                      labelText: "GARIS BUJUR",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    enabled: false,
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Garis Bujur wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton.icon(
+                              label: const Text(
+                                'KOORDINAT RUMAH',
+                                style: TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.location_pin,
+                                size: 18,
+                              ),
+                              onPressed: () async {
+                                LatLng kordinat;
+                                kordinat = LatLng(
+                                    double.parse(_latPemohon.text),
+                                    double.parse(_lngPemohon.text));
+                                final result =
+                                    await Get.to(() => MapKordinat(kordinat));
+
+                                setState(() {
+                                  if (result != null) {
+                                    _latPemohon.text =
+                                        result.latitude.toString();
+                                    _lngPemohon.text =
+                                        result.longitude.toString();
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 25),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _tempLahirPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "TEMPAT LAHIR",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Tempat lahir wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    decoration: const InputDecoration(
+                      labelText: "TANGGAL LAHIR",
+                      labelStyle: TextStyle(fontSize: 13),
+                      suffixIcon: Icon(Icons.calendar_month),
+                    ),
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Tanggal lahir wajib diisi';
+                      }
+                      return null;
+                    },
+                    controller: _tglLahirPemohon1,
+                    autocorrect: false,
+                    readOnly: true,
+                    onTap: () async {
+                      DateTime? newDateLahir = await showDatePicker(
+                        context: context,
+                        initialDate: _tglLahirPemohon.text != ""
+                            ? DateTime.parse(_tglLahirPemohon.text)
+                            : DateTime.now(),
+                        firstDate: DateTime(1900),
+                        lastDate: DateTime(2100),
+                      );
+
+                      if (newDateLahir != null) {
+                        setState(() {
+                          _tglLahirPemohon.text =
+                              DateFormat("yyyy-MM-dd").format(newDateLahir);
+                          _tglLahirPemohon1.text =
+                              DateFormat("d MMMM yyyy", "id")
+                                  .format(newDateLahir);
+                        });
+                      }
+                    },
+                  ),
+                  if (_tglLahirPemohon.text == '')
+                    const Text("Tanggal lahir wajib diisi"),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _tglLahirPemohon,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Error";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  DropdownSearch<Map<String, dynamic>>(
+                    items: const [
+                      {"id": 1, "kelamin": "LAKI-LAKI"},
+                      {"id": 2, "kelamin": "PEREMPUAN"},
+                    ],
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "JENIS KELAMIN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _kelaminPemohon.text =
+                            value?["id"].toString() as String;
+                        _jenisKelaminPemohon.text = value?["kelamin"] ?? "";
+                      });
+                    },
+                    selectedItem: {
+                      "id": _kelaminPemohon.text,
+                      "kelamin": _jenisKelaminPemohon.text
+                    },
+                    popupProps: PopupProps.menu(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          item["kelamin"],
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?["kelamin"] ?? "",
+                      style: const TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?["id"] == "") {
+                        return 'Jenis kelamin wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _pekerjaanPemohon,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "PEKERJAAN",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Pekerjaan wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  DropdownSearch<Map<String, dynamic>>(
+                    items: const [
+                      {"id": 1, "warganegara": "INDONESIA"},
+                      {"id": 2, "warganegara": "ASING"},
+                    ],
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "WARGANEGARA",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        _wniPemohon.text = value?["id"].toString() ?? "";
+                        _jenisWniPemohon.text = value?["warganegara"] ?? "";
+                      });
+                    },
+                    selectedItem: {
+                      "id": _wniPemohon.text,
+                      "warganegara": _jenisWniPemohon.text,
+                    },
+                    popupProps: PopupProps.menu(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          item["warganegara"],
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?["warganegara"] ?? "",
+                      style: const TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?.toString() == "") {
+                        return 'Kewarganegaraan wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (_wniPemohon.text == '2') ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<NegaraModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/negara?key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List negara = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<NegaraModels> negaraList = [];
+
+                          for (var element in negara) {
+                            negaraList.add(NegaraModels.fromJson(element));
+                          }
+
+                          return negaraList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.namaNegara}',
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                        ),
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "NEGARA ASAL",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _negaraPemohon.text = value?.namaNegara ?? "";
+                        });
+                      },
+                      selectedItem: NegaraModels(
+                        namaNegara: _negaraPemohon.text,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.namaNegara ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.namaNegara == "") {
+                          return 'Negara asal wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _emailPemohon,
+                    decoration: const InputDecoration(
+                      labelText: "ALAMAT EMAIL",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Alamat email wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _hpPemohon,
+                    decoration: const InputDecoration(
+                      labelText: "NOMOR HANDPHONE",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    enabled: false,
+                    validator: (value) {
+                      if (value == "") {
+                        return 'Nomor HP wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _nikPemohon,
+                    decoration: const InputDecoration(
+                      labelText: "NOMOR INDUK KEPENDUDUKAN",
+                      labelStyle: TextStyle(fontSize: 13),
+                    ),
+                    enabled: false,
+                    validator: (value) {
+                      if (value == "") {
+                        return 'NIK wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 5),
+                  ktpPemohon != null
+                      ? Image.file(
+                          ktpPemohon!,
+                          fit: BoxFit.cover,
+                        )
+                      : _ktpPemohon.text != ""
+                          ? DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                              ),
+                              child: Image.network(
+                                _ktpPemohon.text,
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const Text('Loading foto...');
+                                },
+                                loadingBuilder: (BuildContext context,
+                                    Widget child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) return child;
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      value:
+                                          loadingProgress.expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          : Image.asset(
+                              'assets/images/noimg.png',
+                              height: 200,
+                              width: 150,
+                              fit: BoxFit.cover,
+                            ),
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Get.bottomSheet(Container(
+                          height: 125,
+                          color: Colors.white,
+                          child: ListView(
+                            children: [
+                              ListTile(
+                                  leading: const Icon(Icons.camera_alt),
+                                  title: const Text("Foto Dari Kamera"),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                    getKtp(ImageSource.camera);
+                                  }),
+                              ListTile(
+                                  leading: const Icon(Icons.image),
+                                  title: const Text("Ambil File Dari Gallery"),
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                    getKtp(ImageSource.gallery);
+                                  })
+                            ],
+                          ),
+                        ));
+                      },
+                      icon: const Icon(
+                        Icons.upload,
+                        size: 18,
+                      ),
+                      label: const Text(
+                        "UNGGAH KTP",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: false,
+                    maintainState: true,
+                    child: TextFormField(
+                      controller: _ktpPemohon,
+                      validator: (value) {
+                        if (value == "") {
+                          return "Error";
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  if (_ktpPemohon.text == '')
+                    const Text("Foto KTP wajib diisi"),
+                  const Divider(
+                    height: 50,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate() &&
+                            isPemohonKirim == true) {
+                          isPemohonKirim == false;
+                          loadingData();
+
+                          Map<String, String> headers = {
+                            'Content-Type': 'multipart/form-data',
+                          };
+
+                          Map<String, String> body = {
+                            "key": ApiContainer.baseKey,
+                            "uid": _uidPemohon.text,
+                            "nama": _namaPemohon.text,
+                            "gelar_depan": _gelarDepan.text,
+                            "gelar_belakang": _gelarBelakang.text,
+                            "alamat": _alamatPemohon.text,
+                            "dusun": _dusunPemohon.text,
+                            "rt": _rtPemohon.text,
+                            "rw": _rwPemohon.text,
+                            "noprop": _nopropPemohon.text,
+                            "nokab": _nokabPemohon.text,
+                            "nokec": _nokecPemohon.text,
+                            "nokel": _nokelPemohon.text,
+                            "kodepos": _kodeposPemohon.text,
+                            "temp_lahir": _tempLahirPemohon.text,
+                            "tgl_lahir": _tglLahirPemohon.text,
+                            "kelamin": _kelaminPemohon.text,
+                            "pekerjaan": _pekerjaanPemohon.text,
+                            "warganegara": _wniPemohon.text,
+                            "negara": _negaraPemohon.text,
+                            "email": _emailPemohon.text,
+                            "lat": _latPemohon.text,
+                            "lng": _lngPemohon.text,
+                          };
+
+                          var request = http.MultipartRequest(
+                              'POST', Uri.parse("$baseUrl/api/nakes-user"));
+
+                          request.headers.addAll(headers);
+                          request.fields.addAll(body);
+
+                          if (fotoPemohon != null) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                                'foto', fotoPemohon?.path ?? ""));
+                          }
+
+                          if (ktpPemohon != null) {
+                            request.files.add(await http.MultipartFile.fromPath(
+                                'ktp', ktpPemohon?.path ?? ""));
+                          }
+
+                          var response = await request.send();
+
+                          if (response.statusCode == 200) {
+                            hapusLoader();
+
+                            setState(() {
+                              currentStep++;
+                            });
+                          } else {
+                            hapusLoader();
+                            errorData();
+                          }
+                        } else {
+                          hapusLoader();
+                          errorPesan("ISIAN DATA BELUM LENGKAP");
+                        }
+                      },
+                      label: const Text('SELANJUTNYA'),
+                      icon: const Icon(Icons.check),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Step(
+            isActive: currentStep >= 1,
+            state: currentStep >= 1 ? StepState.disabled : StepState.complete,
+            title: const Text("DATA PERMOHONAN"),
+            subtitle: const Text(
+              "DATA PERMOHONAN IZIN TENAGA KESEHATAN",
+              style: TextStyle(fontSize: 10),
+            ),
+            content: Form(
+              key: _permohonanKey,
+              child: Column(
+                children: [
+                  DropdownSearch<Map<String, dynamic>>(
+                    items: const [
+                      {"id": 0, "jenis": "PERMOHONAN IZIN BARU"},
+                      {"id": 1, "jenis": "PERPANJANGAN IZIN LAMA"},
+                    ],
+                    dropdownDecoratorProps: const DropDownDecoratorProps(
+                      dropdownSearchDecoration: InputDecoration(
+                        labelText: "STATUS PERMOHONAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    enabled: isPerpanjangan,
+                    selectedItem: {
+                      "id": _perpanjangan.text,
+                      "jenis": perpanjangan ?? "",
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        _perpanjangan.text = value?["id"].toString() ?? "";
+                        perpanjangan = value?["jenis"];
+                        isPerpanjangan = false;
+                      });
+                    },
+                    popupProps: PopupProps.menu(
+                      itemBuilder: (context, item, isSelected) => ListTile(
+                        title: Text(
+                          item["jenis"].toString(),
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                      fit: FlexFit.loose,
+                    ),
+                    dropdownBuilder: (context, selectedItem) => Text(
+                      selectedItem?["jenis"].toString().toUpperCase() ?? "",
+                      style: const TextStyle(
+                        fontSize: 13,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?["id"].toString() == "") {
+                        return 'Status permohonan wajib diisi';
+                      }
+                      return null;
+                    },
+                  ),
+                  if (_perpanjangan.text != "") ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<JenisNakesModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/jenis-nakes?key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          izin = json.decode(response.body)["izin"];
+                          disclaimer = izin["disclaimer"].toString();
+                          List jenisNakes = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<JenisNakesModels> jenisNakesList = [];
+
+                          for (var element in jenisNakes) {
+                            jenisNakesList
+                                .add(JenisNakesModels.fromJson(element));
+                          }
+
+                          return jenisNakesList;
+                        }
+                      },
+                      enabled: isIdNakes,
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            '${item.izin.toString().toUpperCase()} (${item.kode.toString().toUpperCase()})',
+                            style: const TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "JENIS IZIN",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      selectedItem: JenisNakesModels(
+                        id: int.tryParse(_idIzinNakes.text),
+                        izin: nakesIzin ?? "",
+                        kode: nakesKode ?? "",
+                        fasyankes: idFasyankes,
+                        mandiri: idMandiri,
+                        distribusi: idDistribusi,
+                        produksi: idProduksi,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          nakesIzin = value?.izin;
+                          nakesKode = value?.kode;
+                          idFasyankes = value?.fasyankes;
+                          idMandiri = value?.mandiri;
+                          idDistribusi = value?.distribusi;
+                          idProduksi = value?.produksi;
+                          _idIzinNakes.text = value?.id.toString() as String;
+                          isIdNakes = false;
+
+                          cekIzinNakes(_uidPemohon.text, _idIzinNakes.text,
+                              _perpanjangan.text);
+                        });
+                      },
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        "${selectedItem?.izin.toString().toUpperCase()} (${selectedItem?.kode.toString().toUpperCase()})",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.id == null) {
+                          return 'Jenis nakes wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  if (_idIzinNakes.text != "" && isTerbatas == true) ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<Map<String, dynamic>>(
+                      items: [
+                        if (idMandiri == 1)
+                          {"praktek": "MANDIRI", "mandiri": 1, "id": 1},
+                        if (idFasyankes == 1)
+                          {"praktek": "FASYANKES", "mandiri": 0, "id": 2},
+                        if (idDistribusi == 1)
+                          {"praktek": "DISTRIBUSI", "mandiri": 0, "id": 3},
+                        if (idProduksi == 1)
+                          {"praktek": "PRODUKSI", "mandiri": 0, "id": 4}
+                      ],
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "TEMPAT PRAKTIK",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      enabled: isKategoriNakes,
+                      onChanged: (value) {
+                        setState(() {
+                          tempatpraktek = value?["id"];
+                          praktek = value?["praktek"];
+                          mandiri = value?["mandiri"];
+
+                          _tempatPraktek.text = tempatpraktek.toString();
+                          isKategoriNakes = false;
+                        });
+                      },
+                      selectedItem: {
+                        "praktek": praktek ?? "",
+                        "mandiri": mandiri,
+                        "id": tempatpraktek,
+                      },
+                      popupProps: PopupProps.menu(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item["praktek"],
+                            style: const TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?["praktek"] ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?["id"] == null) {
+                          return 'Tempat praktik wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                  if (isTerbatas == false) ...[
+                    const SizedBox(height: 15),
+                    const Text(
+                      "Mohon maaf, jumlah izin yang Anda miliki telah mencapai batas maksimal yang telah ditentukan",
+                    )
+                  ],
+                  if (tempatpraktek != null &&
+                      tempatpraktek != 1 &&
+                      isTerbatas == true) ...[
+                    const SizedBox(height: 5),
+                    DropdownSearch<FasyankesKategoriModels>(
+                      asyncItems: (String filter) async {
+                        var response = await http.get(
+                          Uri.parse(
+                              "$baseUrl/api/fasyankes-kategori?jenis=$praktek&key=${ApiContainer.baseKey}"),
+                        );
+
+                        if (response.statusCode != 200) {
+                          errorData();
+                          return [];
+                        } else {
+                          List kategoriFasyankes = (json.decode(response.body)
+                              as Map<String, dynamic>)["data"];
+
+                          List<FasyankesKategoriModels> kategoriFasyankesList =
+                              [];
+
+                          for (var element in kategoriFasyankes) {
+                            kategoriFasyankesList
+                                .add(FasyankesKategoriModels.fromJson(element));
+                          }
+
+                          return kategoriFasyankesList;
+                        }
+                      },
+                      popupProps: PopupProps.dialog(
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          title: Text(
+                            item.kategori.toString().toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                        fit: FlexFit.loose,
+                      ),
+                      dropdownDecoratorProps: const DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          labelText: "KATEGORI FASYANKES",
+                          labelStyle: TextStyle(fontSize: 13),
+                        ),
+                      ),
+                      enabled: isKategoriFasyankes,
+                      selectedItem: FasyankesKategoriModels(
+                        id: idKategori,
+                        kategori: kategori ?? "",
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          idKategori = value?.id;
+                          kategori = value?.kategori;
+                          isKategoriFasyankes = false;
+                        });
+                      },
+                      dropdownBuilder: (context, selectedItem) => Text(
+                        selectedItem?.kategori.toString().toUpperCase() ?? "",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.id == null) {
+                          return 'Kategori fasyankes wajib diisi';
+                        }
+                        return null;
+                      },
+                    ),
+                    if (idKategori != null) ...[
+                      const SizedBox(height: 5),
+                      DropdownSearch<FasyankesModels>(
+                        asyncItems: (String filter) async {
+                          var response = await http.get(
+                            Uri.parse(
+                                "$baseUrl/api/fasyankes?id_kategori=$idKategori&key=${ApiContainer.baseKey}"),
+                          );
+
+                          if (response.statusCode != 200) {
+                            errorData();
+                            return [];
+                          } else {
+                            List fasyankes = (json.decode(response.body)
+                                as Map<String, dynamic>)["data"];
+
+                            List<FasyankesModels> fasyankesList = [];
+
+                            for (var element in fasyankes) {
+                              fasyankesList
+                                  .add(FasyankesModels.fromJson(element));
+                            }
+
+                            return fasyankesList;
+                          }
+                        },
+                        popupProps: PopupProps.dialog(
+                          itemBuilder: (context, item, isSelected) => ListTile(
+                            title: Text(
+                              item.nama.toString().toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          fit: FlexFit.loose,
+                        ),
+                        dropdownDecoratorProps: const DropDownDecoratorProps(
+                          dropdownSearchDecoration: InputDecoration(
+                            labelText: "NAMA FASYANKES",
+                            labelStyle: TextStyle(fontSize: 13),
+                          ),
+                        ),
+                        enabled: isIdFasyankes,
+                        selectedItem: FasyankesModels(
+                          id: idDataFasyankes,
+                          nama: namaFasyankes ?? "",
+                          lat: latFasyankes,
+                          lng: lngFasyankes,
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            idDataFasyankes = value?.id;
+                            namaFasyankes = value?.nama;
+                            latFasyankes = value?.lat;
+                            lngFasyankes = value?.lng;
+
+                            _idFasyankes.text = idDataFasyankes.toString();
+                            isIdFasyankes = false;
+                          });
+                        },
+                        dropdownBuilder: (context, selectedItem) => Text(
+                          selectedItem?.nama.toString().toUpperCase() ?? "",
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        validator: (value) {
+                          if (value?.id == null) {
+                            return 'Fasyankes wajib diisi';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ],
+                  if (tempatpraktek != null && tempatpraktek == 1) ...[
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      controller: _alamatPraktek,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "ALAMAT PRAKTIK",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                    const SizedBox(height: 5),
+                    TextFormField(
+                      controller: _dusunPraktek,
+                      textCapitalization: TextCapitalization.words,
+                      decoration: const InputDecoration(
+                        labelText: "DUSUN / LINGKUNGAN",
+                        labelStyle: TextStyle(fontSize: 13),
+                      ),
+                      style: const TextStyle(fontSize: 13),
+                    ),
                     const SizedBox(height: 5),
                     IntrinsicHeight(
                       child: Row(
@@ -1030,56 +2314,7 @@ class _NakesState extends State<Nakes> {
                           Expanded(
                             child: TextFormField(
                               style: const TextStyle(fontSize: 13),
-                              controller: _gelarDepan,
-                              decoration: const InputDecoration(
-                                labelText: "Gelar Depan",
-                                labelStyle: TextStyle(fontSize: 13),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 15),
-                          Expanded(
-                            child: TextFormField(
-                              style: const TextStyle(fontSize: 13),
-                              controller: _gelarBelakang,
-                              decoration: const InputDecoration(
-                                labelText: "Gelar Belakang",
-                                labelStyle: TextStyle(fontSize: 13),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _alamatPemohon,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Alamat Rumah Jalan",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _dusunPemohon,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Dusun/Lingkungan",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    IntrinsicHeight(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              style: const TextStyle(fontSize: 13),
-                              controller: _rtPemohon,
+                              controller: _rtPraktek,
                               decoration: const InputDecoration(
                                 labelText: "RT",
                                 labelStyle: TextStyle(fontSize: 13),
@@ -1096,7 +2331,7 @@ class _NakesState extends State<Nakes> {
                           Expanded(
                             child: TextFormField(
                               style: const TextStyle(fontSize: 13),
-                              controller: _rwPemohon,
+                              controller: _rwPraktek,
                               decoration: const InputDecoration(
                                 labelText: "RW",
                                 labelStyle: TextStyle(fontSize: 13),
@@ -1113,33 +2348,34 @@ class _NakesState extends State<Nakes> {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    DropdownSearch<PropinsiModels>(
+                    DropdownSearch<KecamatanModels>(
                       asyncItems: (String filter) async {
                         var response = await http.get(
                           Uri.parse(
-                              "$baseUrl/api/propinsi?key=${ApiContainer.baseKey}"),
+                              "$baseUrl/api/kecamatan-permohonan?key=${ApiContainer.baseKey}"),
                         );
 
                         if (response.statusCode != 200) {
                           errorData();
                           return [];
                         } else {
-                          List propinsi = (json.decode(response.body)
+                          List kecamatan = (json.decode(response.body)
                               as Map<String, dynamic>)["data"];
 
-                          List<PropinsiModels> propinsiList = [];
+                          List<KecamatanModels> kecamatanList = [];
 
-                          for (var element in propinsi) {
-                            propinsiList.add(PropinsiModels.fromJson(element));
+                          for (var element in kecamatan) {
+                            kecamatanList
+                                .add(KecamatanModels.fromJson(element));
                           }
 
-                          return propinsiList;
+                          return kecamatanList;
                         }
                       },
                       popupProps: PopupProps.dialog(
                         itemBuilder: (context, item, isSelected) => ListTile(
                           title: Text(
-                            '${item.namaProp}',
+                            '${item.namaKec}',
                             style: const TextStyle(fontSize: 13),
                           ),
                         ),
@@ -1147,186 +2383,43 @@ class _NakesState extends State<Nakes> {
                       ),
                       dropdownDecoratorProps: const DropDownDecoratorProps(
                         dropdownSearchDecoration: InputDecoration(
-                          labelText: "Propinsi",
+                          labelText: "KECAMATAN",
                           labelStyle: TextStyle(fontSize: 13),
                         ),
                       ),
                       onChanged: (value) {
                         setState(() {
-                          _nopropPemohon.text = value?.noProp ?? "";
-                          _propinsiPemohon.text = value?.namaProp ?? "";
-                          _nokabPemohon.text = "";
-                          _kotaPemohon.text = "";
-                          _nokecPemohon.text = "";
-                          _kecamatanPemohon.text = "";
-                          _nokelPemohon.text = "";
-                          _desaPemohon.text = "";
+                          _nokecPraktek.text = value?.noKec as String;
+                          kecamatan = value?.namaKec;
+
+                          _nokelPraktek.text = "";
+                          desa = "";
                         });
                       },
-                      selectedItem: PropinsiModels(
-                        noProp: _nopropPemohon.text,
-                        namaProp: _propinsiPemohon.text,
+                      selectedItem: KecamatanModels(
+                        noKec: _nokecPraktek.text,
+                        namaKec: kecamatan,
                       ),
                       dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?.namaProp ?? "",
+                        selectedItem?.namaKec ?? "",
                         style: const TextStyle(
                           fontSize: 13,
                         ),
                       ),
                       validator: (value) {
-                        if (value?.noProp == "") {
-                          return 'Propinsi tempat tinggal wajib diisi';
+                        if (value?.noKec == "") {
+                          return 'Kecamatan tempat praktik wajib diisi';
                         }
                         return null;
                       },
                     ),
-                    if (_nopropPemohon.text != "") ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<KotaModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/kota?no_prop=${_nopropPemohon.text}&key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List kota = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<KotaModels> kotaList = [];
-
-                            for (var element in kota) {
-                              kotaList.add(KotaModels.fromJson(element));
-                            }
-
-                            return kotaList;
-                          }
-                        },
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.namaKab}',
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Kota",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _nokabPemohon.text = value?.noKab ?? "";
-                            _kotaPemohon.text = value?.namaKab ?? "";
-
-                            _nokecPemohon.text = "";
-                            _kecamatanPemohon.text = "";
-                            _nokelPemohon.text = "";
-                            _desaPemohon.text = "";
-                          });
-                        },
-                        selectedItem: KotaModels(
-                          noKab: _nokabPemohon.text,
-                          namaKab: _kotaPemohon.text,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.namaKab ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.noKab == "") {
-                            return 'Kota tempat tinggal wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    if (_nopropPemohon.text != "" &&
-                        _nokabPemohon.text != "") ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<KecamatanModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/kecamatan?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List kecamatan = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<KecamatanModels> kecamatanList = [];
-
-                            for (var element in kecamatan) {
-                              kecamatanList
-                                  .add(KecamatanModels.fromJson(element));
-                            }
-
-                            return kecamatanList;
-                          }
-                        },
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.namaKec}',
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Kecamatan",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _nokecPemohon.text = value?.noKec ?? "";
-                            _kecamatanPemohon.text = value?.namaKec ?? "";
-
-                            _nokelPemohon.text = "";
-                            _desaPemohon.text = "";
-                          });
-                        },
-                        selectedItem: KecamatanModels(
-                          noKec: _nokecPemohon.text,
-                          namaKec: _kecamatanPemohon.text,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.namaKec ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.noKec == "") {
-                            return 'Kecamatan tempat tinggal wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    if (_nopropPemohon.text != "" &&
-                        _nokabPemohon.text != "" &&
-                        _nokecPemohon.text != "") ...[
+                    if (_nokecPraktek.text != "") ...[
                       const SizedBox(height: 5),
                       DropdownSearch<DesaModels>(
                         asyncItems: (String filter) async {
                           var response = await http.get(
                             Uri.parse(
-                                "$baseUrl/api/desa?no_prop=${_nopropPemohon.text}&no_kab=${_nokabPemohon.text}&no_kec=${_nokecPemohon.text}&key=${ApiContainer.baseKey}"),
+                                "$baseUrl/api/desa-permohonan?no_kec=${_nokecPraktek.text}&key=${ApiContainer.baseKey}"),
                           );
 
                           if (response.statusCode != 200) {
@@ -1356,19 +2449,19 @@ class _NakesState extends State<Nakes> {
                         ),
                         dropdownDecoratorProps: const DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
-                            labelText: "Desa/Kelurahan",
+                            labelText: "DESA / KELURAHAN",
                             labelStyle: TextStyle(fontSize: 13),
                           ),
                         ),
                         onChanged: (value) {
                           setState(() {
-                            _nokelPemohon.text = value?.noKel ?? "";
-                            _desaPemohon.text = value?.namaKel ?? "";
+                            _nokelPraktek.text = value?.noKel as String;
+                            desa = value?.namaKel;
                           });
                         },
                         selectedItem: DesaModels(
-                          noKel: _nokelPemohon.text,
-                          namaKel: _desaPemohon.text,
+                          noKel: _nokelPraktek.text,
+                          namaKel: desa,
                         ),
                         dropdownBuilder: (context, selectedItem) => Text(
                           selectedItem?.namaKel ?? "",
@@ -1378,7 +2471,7 @@ class _NakesState extends State<Nakes> {
                         ),
                         validator: (value) {
                           if (value?.noKel == "") {
-                            return 'Desa/Kelurahan tempat tinggal wajib diisi';
+                            return 'Desa/Kelurahan tempat praktik wajib diisi';
                           }
                           return null;
                         },
@@ -1387,25 +2480,25 @@ class _NakesState extends State<Nakes> {
                     const SizedBox(height: 5),
                     TextFormField(
                       style: const TextStyle(fontSize: 13),
-                      controller: _kodeposPemohon,
+                      controller: _kodeposPraktek,
                       textCapitalization: TextCapitalization.words,
                       decoration: const InputDecoration(
-                        labelText: "Kodepos",
+                        labelText: "KODE POS",
                         labelStyle: TextStyle(fontSize: 13),
                       ),
                     ),
                     const SizedBox(height: 5),
                     TextFormField(
                       style: const TextStyle(fontSize: 13),
-                      controller: _latPemohon,
+                      controller: _latPraktek,
                       decoration: const InputDecoration(
-                        labelText: "Latitude",
+                        labelText: "GARIS LINTANG",
                         labelStyle: TextStyle(fontSize: 13),
                       ),
                       enabled: false,
                       validator: (value) {
                         if (value == "") {
-                          return 'Kordinat latitude wajib diisi';
+                          return 'Garis Lintang wajib diisi';
                         }
                         return null;
                       },
@@ -1413,15 +2506,15 @@ class _NakesState extends State<Nakes> {
                     const SizedBox(height: 5),
                     TextFormField(
                       style: const TextStyle(fontSize: 13),
-                      controller: _lngPemohon,
+                      controller: _lngPraktek,
                       decoration: const InputDecoration(
-                        labelText: "Longitude",
+                        labelText: "GARIS BUJUR",
                         labelStyle: TextStyle(fontSize: 13),
                       ),
                       enabled: false,
                       validator: (value) {
                         if (value == "") {
-                          return 'Kordinat longitude wajib diisi';
+                          return 'Garis Bujur wajib diisi';
                         }
                         return null;
                       },
@@ -1434,11 +2527,10 @@ class _NakesState extends State<Nakes> {
                         children: [
                           Center(
                             child: SizedBox(
-                              height: 40,
                               width: double.infinity,
                               child: ElevatedButton.icon(
                                 label: const Text(
-                                  'KORDINAT RUMAH',
+                                  'KOORDINAT TEMPAT PRAKTIK',
                                   style: TextStyle(
                                     fontSize: 13,
                                   ),
@@ -1449,17 +2541,24 @@ class _NakesState extends State<Nakes> {
                                 ),
                                 onPressed: () async {
                                   LatLng kordinat;
-                                  kordinat = LatLng(
-                                      double.parse(_latPemohon.text),
-                                      double.parse(_lngPemohon.text));
+
+                                  if (_latPraktek.text != "") {
+                                    kordinat = LatLng(
+                                        double.parse(_latPraktek.text),
+                                        double.parse(_lngPraktek.text));
+                                  } else {
+                                    kordinat = const LatLng(
+                                        -8.223600593616215, 114.36705853790045);
+                                  }
+
                                   final result =
                                       await Get.to(() => MapKordinat(kordinat));
 
                                   setState(() {
                                     if (result != null) {
-                                      _latPemohon.text =
+                                      _latPraktek.text =
                                           result.latitude.toString();
-                                      _lngPemohon.text =
+                                      _lngPraktek.text =
                                           result.longitude.toString();
                                     }
                                   });
@@ -1470,454 +2569,57 @@ class _NakesState extends State<Nakes> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 25),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _tempLahirPemohon,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Tempat Lahir",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Tempat lahir wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      decoration: const InputDecoration(
-                        labelText: "Tanggal Lahir",
-                        labelStyle: TextStyle(fontSize: 13),
-                        suffixIcon: Icon(Icons.calendar_month),
-                      ),
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Tanggal lahir wajib diisi';
-                        }
-                        return null;
-                      },
-                      controller: _tglLahirPemohon1,
-                      autocorrect: false,
-                      readOnly: true,
-                      onTap: () async {
-                        DateTime? newDateLahir = await showDatePicker(
-                          context: context,
-                          initialDate: _tglLahirPemohon.text != ""
-                              ? DateTime.parse(_tglLahirPemohon.text)
-                              : DateTime.now(),
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime(2100),
-                        );
-
-                        if (newDateLahir != null) {
-                          setState(() {
-                            _tglLahirPemohon.text =
-                                DateFormat("yyyy-MM-dd").format(newDateLahir);
-                            _tglLahirPemohon1.text =
-                                DateFormat("d MMMM yyyy", "id")
-                                    .format(newDateLahir);
-                          });
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    DropdownSearch<Map<String, dynamic>>(
-                      items: const [
-                        {"id": 1, "kelamin": "LAKI-LAKI"},
-                        {"id": 2, "kelamin": "PEREMPUAN"},
-                      ],
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          labelText: "Jenis Kelamin",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _kelaminPemohon.text =
-                              value?["id"].toString() as String;
-                          _jenisKelaminPemohon.text = value?["kelamin"] ?? "";
-                        });
-                      },
-                      selectedItem: {
-                        "id": _kelaminPemohon.text,
-                        "kelamin": _jenisKelaminPemohon.text
-                      },
-                      popupProps: PopupProps.menu(
-                        itemBuilder: (context, item, isSelected) => ListTile(
-                          title: Text(
-                            item["kelamin"],
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                        fit: FlexFit.loose,
-                      ),
-                      dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?["kelamin"] ?? "",
-                        style: const TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value?["id"] == "") {
-                          return 'Jenis kelamin wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _pekerjaanPemohon,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Pekerjaan",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Pekerjaan wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    DropdownSearch<Map<String, dynamic>>(
-                      items: const [
-                        {"id": 1, "warganegara": "INDONESIA"},
-                        {"id": 2, "warganegara": "ASING"},
-                      ],
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          labelText: "Warganegara",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _wniPemohon.text = value?["id"].toString() ?? "";
-                          _jenisWniPemohon.text = value?["warganegara"] ?? "";
-                        });
-                      },
-                      selectedItem: {
-                        "id": _wniPemohon.text,
-                        "warganegara": _jenisWniPemohon.text,
-                      },
-                      popupProps: PopupProps.menu(
-                        itemBuilder: (context, item, isSelected) => ListTile(
-                          title: Text(
-                            item["warganegara"],
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                        fit: FlexFit.loose,
-                      ),
-                      dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?["warganegara"] ?? "",
-                        style: const TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value?.toString() == "") {
-                          return 'Kewarganegaraan wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    if (_wniPemohon.text == '2') ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<NegaraModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/negara?key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List negara = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<NegaraModels> negaraList = [];
-
-                            for (var element in negara) {
-                              negaraList.add(NegaraModels.fromJson(element));
-                            }
-
-                            return negaraList;
-                          }
-                        },
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.namaNegara}',
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Negara Asal",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _negaraPemohon.text = value?.namaNegara ?? "";
-                          });
-                        },
-                        selectedItem: NegaraModels(
-                          namaNegara: _negaraPemohon.text,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.namaNegara ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.namaNegara == "") {
-                            return 'Negara asal wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _emailPemohon,
-                      decoration: const InputDecoration(
-                        labelText: "Email",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Alamat email wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _hpPemohon,
-                      decoration: const InputDecoration(
-                        labelText: "Nomor HP",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                      enabled: false,
-                      validator: (value) {
-                        if (value == "") {
-                          return 'Nomor HP wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _nikPemohon,
-                      decoration: const InputDecoration(
-                        labelText: "NIK",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                      enabled: false,
-                      validator: (value) {
-                        if (value == "") {
-                          return 'NIK wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    ktpPemohon != null
-                        ? Image.file(
-                            ktpPemohon!,
-                            fit: BoxFit.cover,
-                          )
-                        : _ktpPemohon.text != ""
-                            ? DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Image.network(
-                                  _ktpPemohon.text,
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (BuildContext context,
-                                      Object exception,
-                                      StackTrace? stackTrace) {
-                                    return const Text('Loading foto...');
-                                  },
-                                  loadingBuilder: (BuildContext context,
-                                      Widget child,
-                                      ImageChunkEvent? loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Image.asset(
-                                'assets/images/noimg.png',
-                                height: 200,
-                                width: 150,
-                                fit: BoxFit.cover,
-                              ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      height: 40,
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Get.bottomSheet(Container(
-                            height: 125,
-                            color: Colors.white,
-                            child: ListView(
-                              children: [
-                                ListTile(
-                                    leading: const Icon(Icons.camera_alt),
-                                    title: const Text("Foto Dari Kamera"),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      getKtp(ImageSource.camera);
-                                    }),
-                                ListTile(
-                                    leading: const Icon(Icons.image),
-                                    title:
-                                        const Text("Ambil File Dari Gallery"),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      getKtp(ImageSource.gallery);
-                                    })
-                              ],
-                            ),
-                          ));
-                        },
-                        icon: const Icon(
-                          Icons.upload,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          "UNGGAH KTP",
-                          style: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                    ),
-                    Visibility(
-                      visible: false,
-                      maintainState: true,
-                      child: TextFormField(
-                        controller: _ktpPemohon,
-                        validator: (value) {
-                          if (value == "") {
-                            return "Error";
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    if (_ktpPemohon.text == '')
-                      const Text("Foto KTP wajib diisi"),
-                    const Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
+                  ],
+                  const Divider(
+                    height: 50,
+                    thickness: 1,
+                    color: Colors.black,
+                  ),
+                  if (isTerbatas == true) ...[
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () async {
-                          if (_formKey.currentState!.validate() &&
-                              isPemohonKirim == true) {
-                            isPemohonKirim == false;
+                          if (_permohonanKey.currentState!.validate()) {
                             loadingData();
 
-                            Map<String, String> headers = {
-                              'Content-Type': 'multipart/form-data',
-                            };
+                            getNakes(_uidPemohon.text, _idIzinNakes.text,
+                                tempatpraktek.toString());
 
-                            Map<String, String> body = {
-                              "key": ApiContainer.baseKey,
-                              "uid": _uidPemohon.text,
-                              "nama": _namaPemohon.text,
-                              "gelar_depan": _gelarDepan.text,
-                              "gelar_belakang": _gelarBelakang.text,
-                              "alamat": _alamatPemohon.text,
-                              "dusun": _dusunPemohon.text,
-                              "rt": _rtPemohon.text,
-                              "rw": _rwPemohon.text,
-                              "noprop": _nopropPemohon.text,
-                              "nokab": _nokabPemohon.text,
-                              "nokec": _nokecPemohon.text,
-                              "nokel": _nokelPemohon.text,
-                              "kodepos": _kodeposPemohon.text,
-                              "temp_lahir": _tempLahirPemohon.text,
-                              "tgl_lahir": _tglLahirPemohon.text,
-                              "kelamin": _kelaminPemohon.text,
-                              "pekerjaan": _pekerjaanPemohon.text,
-                              "warganegara": _wniPemohon.text,
-                              "negara": _negaraPemohon.text,
-                              "email": _emailPemohon.text,
-                              "lat": _latPemohon.text,
-                              "lng": _lngPemohon.text,
-                            };
+                            if (tempatpraktek == 1) {
+                              var request = await http.post(
+                                Uri.parse("$baseUrl/api/nakes-sppl"),
+                                body: {
+                                  "key": ApiContainer.baseKey,
+                                  "uid": _uidPemohon.text,
+                                  "no_kec": _nokecPraktek.text,
+                                  "no_kel": _nokelPraktek.text,
+                                  "id_izin_nakes": _idIzinNakes.text,
+                                  "alamat_praktik": _alamatPraktek.text,
+                                  "dusun": _dusunPraktek.text,
+                                  "rt": _rtPraktek.text,
+                                  "rw": _rwPraktek.text,
+                                },
+                              );
 
-                            var request = http.MultipartRequest(
-                                'POST', Uri.parse("$baseUrl/api/nakes-user"));
-
-                            request.headers.addAll(headers);
-                            request.fields.addAll(body);
-
-                            if (fotoPemohon != null) {
-                              request.files.add(
-                                  await http.MultipartFile.fromPath(
-                                      'foto', fotoPemohon?.path ?? ""));
-                            }
-
-                            if (ktpPemohon != null) {
-                              request.files.add(
-                                  await http.MultipartFile.fromPath(
-                                      'ktp', ktpPemohon?.path ?? ""));
-                            }
-
-                            var response = await request.send();
-
-                            if (response.statusCode == 200) {
+                              if (request.statusCode == 200) {
+                                hapusLoader();
+                                setState(() {
+                                  currentStep++;
+                                });
+                              } else {
+                                hapusLoader();
+                                errorData();
+                              }
+                            } else {
                               hapusLoader();
-
                               setState(() {
                                 currentStep++;
                               });
-                            } else {
-                              hapusLoader();
-                              errorData();
                             }
                           } else {
                             hapusLoader();
-                            errorPesan("Silahkan melengkapi semua data");
+                            errorPesan("ISIAN DATA BELUM LENGKAP");
                           }
                         },
                         label: const Text('SELANJUTNYA'),
@@ -1928,784 +2630,66 @@ class _NakesState extends State<Nakes> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ]
+                ],
               ),
             ),
-            Step(
-              isActive: currentStep >= 1,
-              state: currentStep >= 1 ? StepState.disabled : StepState.complete,
-              title: const Text("DATA PERMOHONAN"),
-              subtitle: const Text("Rincian Permohonan Izin Nakes"),
-              content: Form(
-                key: _permohonanKey,
-                child: Column(
-                  children: [
-                    DropdownSearch<Map<String, dynamic>>(
-                      items: const [
-                        {"id": 0, "jenis": "PERMOHONAN IZIN BARU"},
-                        {"id": 1, "jenis": "PERPANJANGAN IZIN LAMA"},
-                      ],
-                      dropdownDecoratorProps: const DropDownDecoratorProps(
-                        dropdownSearchDecoration: InputDecoration(
-                          labelText: "Status Permohonan",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      enabled: isPerpanjangan,
-                      selectedItem: {
-                        "id": _perpanjangan.text,
-                        "jenis": perpanjangan ?? "",
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _perpanjangan.text = value?["id"].toString() ?? "";
-                          perpanjangan = value?["jenis"];
-                          isPerpanjangan = false;
-                        });
-                      },
-                      popupProps: PopupProps.menu(
-                        itemBuilder: (context, item, isSelected) => ListTile(
-                          title: Text(
-                            item["jenis"].toString(),
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                        ),
-                        fit: FlexFit.loose,
-                      ),
-                      dropdownBuilder: (context, selectedItem) => Text(
-                        selectedItem?["jenis"].toString().toUpperCase() ?? "",
-                        style: const TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value?["id"].toString() == "") {
-                          return 'Status permohonan wajib diisi';
-                        }
-                        return null;
-                      },
-                    ),
-                    if (_perpanjangan.text != "") ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<JenisNakesModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/jenis-nakes?key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            izin = json.decode(response.body)["izin"];
-                            disclaimer = izin["disclaimer"].toString();
-                            List jenisNakes = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<JenisNakesModels> jenisNakesList = [];
-
-                            for (var element in jenisNakes) {
-                              jenisNakesList
-                                  .add(JenisNakesModels.fromJson(element));
-                            }
-
-                            return jenisNakesList;
-                          }
-                        },
-                        enabled: isIdNakes,
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.izin.toString().toUpperCase()} (${item.kode.toString().toUpperCase()})',
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Jenis Izin",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        selectedItem: JenisNakesModels(
-                          id: int.tryParse(_idIzinNakes.text),
-                          izin: nakesIzin ?? "",
-                          kode: nakesKode ?? "",
-                          fasyankes: idFasyankes,
-                          mandiri: idMandiri,
-                          distribusi: idDistribusi,
-                          produksi: idProduksi,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            nakesIzin = value?.izin;
-                            nakesKode = value?.kode;
-                            idFasyankes = value?.fasyankes;
-                            idMandiri = value?.mandiri;
-                            idDistribusi = value?.distribusi;
-                            idProduksi = value?.produksi;
-                            _idIzinNakes.text = value?.id.toString() as String;
-                            isIdNakes = false;
-
-                            cekIzinNakes(_uidPemohon.text, _idIzinNakes.text,
-                                _perpanjangan.text);
-                          });
-                        },
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          "${selectedItem?.izin.toString().toUpperCase()} (${selectedItem?.kode.toString().toUpperCase()})",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.id == null) {
-                            return 'Jenis nakes wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    if (_idIzinNakes.text != "" && isTerbatas == true) ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<Map<String, dynamic>>(
-                        items: [
-                          if (idMandiri == 1)
-                            {"praktek": "MANDIRI", "mandiri": 1, "id": 1},
-                          if (idFasyankes == 1)
-                            {"praktek": "FASYANKES", "mandiri": 0, "id": 2},
-                          if (idDistribusi == 1)
-                            {"praktek": "DISTRIBUSI", "mandiri": 0, "id": 3},
-                          if (idProduksi == 1)
-                            {"praktek": "PRODUKSI", "mandiri": 0, "id": 4}
-                        ],
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Tempat Praktik",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        enabled: isKategoriNakes,
-                        onChanged: (value) {
-                          setState(() {
-                            tempatpraktek = value?["id"];
-                            praktek = value?["praktek"];
-                            mandiri = value?["mandiri"];
-
-                            _tempatPraktek.text = tempatpraktek.toString();
-                            isKategoriNakes = false;
-                          });
-                        },
-                        selectedItem: {
-                          "praktek": praktek ?? "",
-                          "mandiri": mandiri,
-                          "id": tempatpraktek,
-                        },
-                        popupProps: PopupProps.menu(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item["praktek"],
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?["praktek"] ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?["id"] == null) {
-                            return 'Tempat praktik wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                    ],
-                    if (isTerbatas == false) ...[
-                      const SizedBox(height: 15),
-                      const Text(
-                        "Mohon maaf, jumlah izin yang Anda miliki telah mencapai batas maksimal yang telah ditentukan",
-                      )
-                    ],
-                    if (tempatpraktek != null &&
-                        tempatpraktek != 1 &&
-                        isTerbatas == true) ...[
-                      const SizedBox(height: 5),
-                      DropdownSearch<FasyankesKategoriModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/fasyankes-kategori?jenis=$praktek&key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List kategoriFasyankes = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<FasyankesKategoriModels>
-                                kategoriFasyankesList = [];
-
-                            for (var element in kategoriFasyankes) {
-                              kategoriFasyankesList.add(
-                                  FasyankesKategoriModels.fromJson(element));
-                            }
-
-                            return kategoriFasyankesList;
-                          }
-                        },
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              item.kategori.toString().toUpperCase(),
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Kategori Fasyankes",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        enabled: isKategoriFasyankes,
-                        selectedItem: FasyankesKategoriModels(
-                          id: idKategori,
-                          kategori: kategori ?? "",
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            idKategori = value?.id;
-                            kategori = value?.kategori;
-                            isKategoriFasyankes = false;
-                          });
-                        },
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.kategori.toString().toUpperCase() ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.id == null) {
-                            return 'Kategori fasyankes wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      if (idKategori != null) ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<FasyankesModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/fasyankes?id_kategori=$idKategori&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List fasyankes = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<FasyankesModels> fasyankesList = [];
-
-                              for (var element in fasyankes) {
-                                fasyankesList
-                                    .add(FasyankesModels.fromJson(element));
-                              }
-
-                              return fasyankesList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                item.nama.toString().toUpperCase(),
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Fasyankes",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          enabled: isIdFasyankes,
-                          selectedItem: FasyankesModels(
-                            id: idDataFasyankes,
-                            nama: namaFasyankes ?? "",
-                            lat: latFasyankes,
-                            lng: lngFasyankes,
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              idDataFasyankes = value?.id;
-                              namaFasyankes = value?.nama;
-                              latFasyankes = value?.lat;
-                              lngFasyankes = value?.lng;
-
-                              _idFasyankes.text = idDataFasyankes.toString();
-                              isIdFasyankes = false;
-                            });
-                          },
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.nama.toString().toUpperCase() ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.id == null) {
-                              return 'Fasyankes wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ],
-                    if (tempatpraktek != null && tempatpraktek == 1) ...[
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        controller: _alamatPraktek,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Alamat Praktik",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        style: const TextStyle(fontSize: 13),
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Alamat praktik wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        controller: _dusunPraktek,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Dusun/Lingkungan",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        style: const TextStyle(fontSize: 13),
-                      ),
-                      const SizedBox(height: 5),
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _rtPraktek,
-                                decoration: const InputDecoration(
-                                  labelText: "RT",
-                                  labelStyle: TextStyle(fontSize: 13),
-                                ),
-                                validator: (value) {
-                                  if (value == "") {
-                                    return 'RT wajib diisi';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 15),
-                            Expanded(
-                              child: TextFormField(
-                                style: const TextStyle(fontSize: 13),
-                                controller: _rwPraktek,
-                                decoration: const InputDecoration(
-                                  labelText: "RW",
-                                  labelStyle: TextStyle(fontSize: 13),
-                                ),
-                                validator: (value) {
-                                  if (value == "") {
-                                    return 'RW wajib diisi';
-                                  }
-                                  return null;
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      DropdownSearch<KecamatanModels>(
-                        asyncItems: (String filter) async {
-                          var response = await http.get(
-                            Uri.parse(
-                                "$baseUrl/api/kecamatan-permohonan?key=${ApiContainer.baseKey}"),
-                          );
-
-                          if (response.statusCode != 200) {
-                            errorData();
-                            return [];
-                          } else {
-                            List kecamatan = (json.decode(response.body)
-                                as Map<String, dynamic>)["data"];
-
-                            List<KecamatanModels> kecamatanList = [];
-
-                            for (var element in kecamatan) {
-                              kecamatanList
-                                  .add(KecamatanModels.fromJson(element));
-                            }
-
-                            return kecamatanList;
-                          }
-                        },
-                        popupProps: PopupProps.dialog(
-                          itemBuilder: (context, item, isSelected) => ListTile(
-                            title: Text(
-                              '${item.namaKec}',
-                              style: const TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          fit: FlexFit.loose,
-                        ),
-                        dropdownDecoratorProps: const DropDownDecoratorProps(
-                          dropdownSearchDecoration: InputDecoration(
-                            labelText: "Kecamatan",
-                            labelStyle: TextStyle(fontSize: 13),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _nokecPraktek.text = value?.noKec as String;
-                            kecamatan = value?.namaKec;
-
-                            _nokelPraktek.text = "";
-                            desa = "";
-                          });
-                        },
-                        selectedItem: KecamatanModels(
-                          noKec: _nokecPraktek.text,
-                          namaKec: kecamatan,
-                        ),
-                        dropdownBuilder: (context, selectedItem) => Text(
-                          selectedItem?.namaKec ?? "",
-                          style: const TextStyle(
-                            fontSize: 13,
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value?.noKec == "") {
-                            return 'Kecamatan tempat praktik wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      if (_nokecPraktek.text != "") ...[
-                        const SizedBox(height: 5),
-                        DropdownSearch<DesaModels>(
-                          asyncItems: (String filter) async {
-                            var response = await http.get(
-                              Uri.parse(
-                                  "$baseUrl/api/desa-permohonan?no_kec=${_nokecPraktek.text}&key=${ApiContainer.baseKey}"),
-                            );
-
-                            if (response.statusCode != 200) {
-                              errorData();
-                              return [];
-                            } else {
-                              List desa = (json.decode(response.body)
-                                  as Map<String, dynamic>)["data"];
-
-                              List<DesaModels> desaList = [];
-
-                              for (var element in desa) {
-                                desaList.add(DesaModels.fromJson(element));
-                              }
-
-                              return desaList;
-                            }
-                          },
-                          popupProps: PopupProps.dialog(
-                            itemBuilder: (context, item, isSelected) =>
-                                ListTile(
-                              title: Text(
-                                '${item.namaKel}',
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            fit: FlexFit.loose,
-                          ),
-                          dropdownDecoratorProps: const DropDownDecoratorProps(
-                            dropdownSearchDecoration: InputDecoration(
-                              labelText: "Desa/Kelurahan",
-                              labelStyle: TextStyle(fontSize: 13),
-                            ),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              _nokelPraktek.text = value?.noKel as String;
-                              desa = value?.namaKel;
-                            });
-                          },
-                          selectedItem: DesaModels(
-                            noKel: _nokelPraktek.text,
-                            namaKel: desa,
-                          ),
-                          dropdownBuilder: (context, selectedItem) => Text(
-                            selectedItem?.namaKel ?? "",
-                            style: const TextStyle(
-                              fontSize: 13,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value?.noKel == "") {
-                              return 'Desa/Kelurahan tempat praktik wajib diisi';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _kodeposPraktek,
-                        textCapitalization: TextCapitalization.words,
-                        decoration: const InputDecoration(
-                          labelText: "Kodepos",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _latPraktek,
-                        decoration: const InputDecoration(
-                          labelText: "Latitude",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        enabled: false,
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Kordinat latitude wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 5),
-                      TextFormField(
-                        style: const TextStyle(fontSize: 13),
-                        controller: _lngPraktek,
-                        decoration: const InputDecoration(
-                          labelText: "Longitude",
-                          labelStyle: TextStyle(fontSize: 13),
-                        ),
-                        enabled: false,
-                        validator: (value) {
-                          if (value == "") {
-                            return 'Kordinat longitude wajib diisi';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: SizedBox(
-                                height: 40,
-                                width: double.infinity,
-                                child: ElevatedButton.icon(
-                                  label: const Text(
-                                    'KORDINAT TEMPAT PRAKTIK',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.location_pin,
-                                    size: 18,
-                                  ),
-                                  onPressed: () async {
-                                    LatLng kordinat;
-
-                                    if (_latPraktek.text != "") {
-                                      kordinat = LatLng(
-                                          double.parse(_latPraktek.text),
-                                          double.parse(_lngPraktek.text));
-                                    } else {
-                                      kordinat = const LatLng(
-                                          -8.223600593616215,
-                                          114.36705853790045);
-                                    }
-
-                                    final result = await Get.to(
-                                        () => MapKordinat(kordinat));
-
-                                    setState(() {
-                                      if (result != null) {
-                                        _latPraktek.text =
-                                            result.latitude.toString();
-                                        _lngPraktek.text =
-                                            result.longitude.toString();
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                    const Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    if (isTerbatas == true) ...[
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton.icon(
-                          onPressed: () async {
-                            if (_permohonanKey.currentState!.validate()) {
-                              loadingData();
-
-                              getNakes(_uidPemohon.text, _idIzinNakes.text,
-                                  tempatpraktek.toString());
-
-                              if (tempatpraktek == 1) {
-                                var request = await http.post(
-                                  Uri.parse("$baseUrl/api/nakes-sppl"),
-                                  body: {
-                                    "key": ApiContainer.baseKey,
-                                    "uid": _uidPemohon.text,
-                                    "no_kec": _nokecPraktek.text,
-                                    "no_kel": _nokelPraktek.text,
-                                    "id_izin_nakes": _idIzinNakes.text,
-                                    "alamat_praktik": _alamatPraktek.text,
-                                    "dusun": _dusunPraktek.text,
-                                    "rt": _rtPraktek.text,
-                                    "rw": _rwPraktek.text,
-                                  },
-                                );
-
-                                if (request.statusCode == 200) {
-                                  hapusLoader();
-                                  setState(() {
-                                    currentStep++;
-                                  });
-                                } else {
-                                  hapusLoader();
-                                  errorData();
-                                }
-                              } else {
-                                hapusLoader();
-                                setState(() {
-                                  currentStep++;
-                                });
-                              }
-                            } else {
-                              hapusLoader();
-                              errorPesan("Silahkan melengkapi semua data");
-                            }
-                          },
-                          label: const Text('SELANJUTNYA'),
-                          icon: const Icon(Icons.check),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: const Size(double.infinity, 50),
-                          ),
-                        ),
-                      ),
-                    ]
-                  ],
-                ),
-              ),
+          ),
+          Step(
+            isActive: currentStep >= 2,
+            state: currentStep >= 2 ? StepState.disabled : StepState.complete,
+            title: const Text("DOKUMEN"),
+            subtitle: const Text(
+              "DOKUMEN PERMOHONAN IZIN NAKES",
+              style: TextStyle(fontSize: 10),
             ),
-            Step(
-              isActive: currentStep >= 2,
-              state: currentStep >= 2 ? StepState.disabled : StepState.complete,
-              title: const Text("DOKUMEN"),
-              subtitle: const Text("Dokumen Permohonan Izin Nakes"),
-              content: Form(
-                key: _dokumenKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    if (varPendTerakhir == 1) buildPendidikanTerakhir(),
-                    if (varNoSertifikat == 1) buildSertKomptensi(),
-                    if (varNoStr == 1) buildStr(),
-                    if (varNoRekomOp == 1) buildRekomOp(),
-                    if (varKetSehat == 1) buildKetSehat(),
-                    if (varSpMematuhi == 1) buildPatuhFarmasi(),
-                    if (varSpTempPraktek == 1) buildTempatPraktik(),
-                    if (varSkFasyankes == 1 && tempatpraktek != 1)
-                      buildKetPimpinanFasyankes(),
-                    if (varSpAtasan == 1 && varSebelum! > 0)
-                      buildPersetujuanAtasan(),
-                    if (varSkKomiteInterensif == 1) buildKomiteInternship(),
-                    if (varSuratIzinSebelum == 1 &&
-                        varCekFasyankes != 0 &&
-                        tempatpraktek != 1)
-                      buildFasyankesSebelum(),
-                    if (_perpanjangan.text == "1") buildIzinLama(),
-                    if (tempatpraktek == 1) ...[
-                      buildSppl(),
-                      buildImb(),
-                    ],
-                    if (varRekomDinkes == 1) buildRekomendasiDinkes(),
-                    const Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.black,
+            content: Form(
+              key: _dokumenKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (varPendTerakhir == 1) buildPendidikanTerakhir(),
+                  if (varNoSertifikat == 1) buildSertKomptensi(),
+                  if (varNoStr == 1) buildStr(),
+                  if (varNoRekomOp == 1) buildRekomOp(),
+                  if (varKetSehat == 1) buildKetSehat(),
+                  if (varSpMematuhi == 1) buildPatuhFarmasi(),
+                  if (varSpTempPraktek == 1) buildTempatPraktik(),
+                  if (varSkFasyankes == 1 && tempatpraktek != 1)
+                    buildKetPimpinanFasyankes(),
+                  if (varSpAtasan == 1 && varSebelum! > 0)
+                    buildPersetujuanAtasan(),
+                  if (varSkKomiteInterensif == 1) buildKomiteInternship(),
+                  if (varCekFasyankes != 0 && tempatpraktek != 1)
+                    buildFasyankesSebelum(),
+                  if (_perpanjangan.text == "1") buildIzinLama(),
+                  if (tempatpraktek == 1) ...[
+                    buildSppl(),
+                    buildImb(),
+                  ],
+                  if (varRekomDinkes == 1) buildRekomendasiDinkes(),
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    style: const TextStyle(fontSize: 13),
+                    controller: _catatan,
+                    maxLines: 2,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: const InputDecoration(
+                      labelText: "CATATAN PERMOHONAN",
+                      labelStyle: TextStyle(fontSize: 13),
                     ),
-                    TextFormField(
-                      style: const TextStyle(fontSize: 13),
-                      controller: _catatan,
-                      maxLines: 2,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: const InputDecoration(
-                        labelText: "Catatan Permohonan",
-                        labelStyle: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    const Divider(
-                      height: 50,
-                      thickness: 1,
-                      color: Colors.black,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: () async {
-                          if (_dokumenKey.currentState!.validate() &&
-                              isPermohonanKirim == true) {
-                            Get.dialog(
-                              Container(
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () async {
+                        if (_dokumenKey.currentState!.validate() &&
+                            isPermohonanKirim == true) {
+                          Get.dialog(
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Container(
                                 color: Colors.white,
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
@@ -3191,9 +3175,14 @@ class _NakesState extends State<Nakes> {
 
                                               if (response.statusCode == 200) {
                                                 hapusLoader();
+                                                Navigator.pop(context);
+                                                Navigator.pop(context);
                                                 pesanData(
-                                                    "Permohonan Izin Nakes Berhasil Dikirim");
-                                                Get.offAllNamed("/home");
+                                                    "PERMOHONAN IZIN NAKES BERHASIL DIKIRIM");
+                                                Get.toNamed("/home");
+                                                // pesanData(
+                                                //     "PERMOHONAN IZIN NAKES BERHASIL DIKIRIM");
+                                                // Get.offAllNamed("/home");
                                               } else {
                                                 hapusLoader();
                                                 errorData();
@@ -3201,7 +3190,7 @@ class _NakesState extends State<Nakes> {
                                             } else {
                                               hapusLoader();
                                               errorPesan(
-                                                  "Silahkan melengkapi semua data");
+                                                  "ISIAN DATA BELUM LENGKAP");
                                             }
                                           },
                                           label: const Text('KIRIM PERMOHONAN'),
@@ -3217,22 +3206,24 @@ class _NakesState extends State<Nakes> {
                                   ),
                                 ),
                               ),
-                            );
-                          }
-                        },
-                        label: const Text("KIRIM PERMOHONAN"),
-                        icon: const Icon(Icons.check),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            minimumSize: const Size(double.infinity, 50)),
-                      ),
+                            ),
+                          );
+                        } else {
+                          errorPesan("ISIAN DATA BELUM LENGKAP");
+                        }
+                      },
+                      label: const Text("KIRIM PERMOHONAN"),
+                      icon: const Icon(Icons.check),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          minimumSize: const Size(double.infinity, 50)),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -3240,7 +3231,6 @@ class _NakesState extends State<Nakes> {
   //PENDIDIKAN TERAKHIR
   Widget buildPendidikanTerakhir() => Column(
         children: [
-          const SizedBox(height: 10),
           const Text(
             "PENDIDIKAN TERAKHIR",
             style: TextStyle(
@@ -3248,11 +3238,11 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           TextFormField(
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Pendidikan Terakhir",
+              labelText: "PENDIDIKAN TERAKHIR",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _pendidikanTerakhir,
@@ -3269,7 +3259,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Lembaga Pendidikan",
+              labelText: "LEMBAGA PENDIDIKAN",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _lembagaPendidikan,
@@ -3287,7 +3277,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Nomor Ijasah",
+              labelText: "NOMOR IJASAH",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _noIjasah,
@@ -3305,7 +3295,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Tanggal Ijasah",
+              labelText: "TANGGAL IJASAH",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -3341,7 +3331,29 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 20),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _tglIjasah,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_tglIjasah.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          const SizedBox(height: 5),
           scanIjasah != null
               ? Wrap(
                   children: scanIjasah!.map((imageone) {
@@ -3384,10 +3396,9 @@ class _NakesState extends State<Nakes> {
                       ]
                     ])
                   : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getIjasah(),
               icon: const Icon(
@@ -3415,8 +3426,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokIjasah.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokIjasah.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         ],
       );
 
@@ -3424,7 +3442,7 @@ class _NakesState extends State<Nakes> {
   Widget buildSertKomptensi() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -3436,10 +3454,10 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Nomor Sertifikat",
+              labelText: "NOMOR SERTIFIKAT",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _sertKompetensi,
@@ -3457,7 +3475,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Tanggal Sertifikat",
+              labelText: "TANGGAL SERTIFIKAT",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -3493,7 +3511,29 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 15),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _tglSertKompetensi,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_tglSertKompetensi.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          const SizedBox(height: 5),
           scanSertifikat != null
               ? Wrap(
                   children: scanSertifikat!.map((imageone) {
@@ -3537,10 +3577,9 @@ class _NakesState extends State<Nakes> {
                       ]
                     ])
                   : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSertifikat(),
               label: const Text(
@@ -3568,9 +3607,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
           if (_dokSertKompetensi.text == '')
-            const Text("Dokumen wajib diunggah"),
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -3578,7 +3623,7 @@ class _NakesState extends State<Nakes> {
   Widget buildStr() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -3590,12 +3635,12 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           TextFormField(
             controller: _strNo,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Nomor STR",
+              labelText: "NOMOR STR",
               labelStyle: TextStyle(fontSize: 13),
             ),
             style: const TextStyle(
@@ -3611,7 +3656,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Tanggal STR",
+              labelText: "TANGGAL STR",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -3648,19 +3693,39 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _strTanggal,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_strTanggal.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "STR Berlaku Sampai",
+              labelText: "MASA BERLAKU STR SAMPAI",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
             controller: _strBerlaku1,
             autocorrect: false,
             readOnly: true,
-            style: const TextStyle(
-              fontSize: 14,
-            ),
+            style: const TextStyle(fontSize: 13),
             onTap: () async {
               DateTime? newDateBerlakuStr = await showDatePicker(
                 context: context,
@@ -3687,6 +3752,28 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _strBerlaku,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_strBerlaku.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           const SizedBox(height: 5),
           DropdownSearch<StrModels>(
             asyncItems: (String filter) async {
@@ -3722,7 +3809,7 @@ class _NakesState extends State<Nakes> {
             ),
             dropdownDecoratorProps: const DropDownDecoratorProps(
               dropdownSearchDecoration: InputDecoration(
-                labelText: "Dikeluarkan Oleh",
+                labelText: "DIKELUARKAN OLEH",
                 labelStyle: TextStyle(fontSize: 13),
               ),
             ),
@@ -3747,7 +3834,7 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanStr != null
               ? Wrap(
                   children: scanStr!.map((imageone) {
@@ -3790,10 +3877,9 @@ class _NakesState extends State<Nakes> {
                       ]
                     ])
                   : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getStr(),
               label: const Text(
@@ -3821,8 +3907,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokStr.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokStr.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -3830,7 +3923,7 @@ class _NakesState extends State<Nakes> {
   Widget buildRekomOp() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -3842,10 +3935,10 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Nomor Rekomendasi",
+              labelText: "NOMOR REKOMENDASI",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _rekomOp,
@@ -3863,7 +3956,7 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Tanggal Rekomendasi",
+              labelText: "TANGGAL REKOMENDASI",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -3900,7 +3993,29 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 15),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _tglRekomOp,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_tglRekomOp.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          const SizedBox(height: 5),
           scanRekomOp != null
               ? Wrap(
                   children: scanRekomOp!.map((imageone) {
@@ -3943,10 +4058,9 @@ class _NakesState extends State<Nakes> {
                       ]
                     ])
                   : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getRekomOp(),
               label: const Text(
@@ -3975,8 +4089,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokRekomOp.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokRekomOp.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -3984,7 +4105,7 @@ class _NakesState extends State<Nakes> {
   Widget buildKetSehat() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -3996,7 +4117,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanKetSehat != null
               ? Wrap(
                   children: scanKetSehat!.map(
@@ -4012,10 +4133,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getKetSehat(),
               label: const Text(
@@ -4044,8 +4164,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokKetSehat.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokKetSehat.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4053,7 +4180,7 @@ class _NakesState extends State<Nakes> {
   Widget buildPatuhFarmasi() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4065,7 +4192,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanSuperPatuh != null
               ? Wrap(
                   children: scanSuperPatuh!.map(
@@ -4081,10 +4208,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSuperPatuh(),
               label: const Text(
@@ -4113,8 +4239,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSuperPatuh.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSuperPatuh.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4122,7 +4255,7 @@ class _NakesState extends State<Nakes> {
   Widget buildTempatPraktik() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4134,7 +4267,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanSuperPraktik != null
               ? Wrap(
                   children: scanSuperPraktik!.map(
@@ -4150,10 +4283,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSuperPraktik(),
               label: const Text(
@@ -4182,8 +4314,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSuperPraktik.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSuperPraktik.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4191,7 +4330,7 @@ class _NakesState extends State<Nakes> {
   Widget buildKetPimpinanFasyankes() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4203,7 +4342,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanSuketPraktik != null
               ? Wrap(
                   children: scanSuketPraktik!.map(
@@ -4219,10 +4358,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSuketPraktik(),
               label: const Text(
@@ -4251,8 +4389,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSuketPraktik.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSuketPraktik.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4260,7 +4405,7 @@ class _NakesState extends State<Nakes> {
   Widget buildPersetujuanAtasan() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4272,7 +4417,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanSuperAtasan != null
               ? Wrap(
                   children: scanSuperAtasan!.map(
@@ -4288,10 +4433,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSuperAtasan(),
               label: const Text(
@@ -4320,8 +4464,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSuperAtasan.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSuperAtasan.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4329,7 +4480,7 @@ class _NakesState extends State<Nakes> {
   Widget buildKomiteInternship() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4341,7 +4492,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanSuketIntern != null
               ? Wrap(
                   children: scanSuketIntern!.map(
@@ -4357,10 +4508,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSuketIntern(),
               label: const Text(
@@ -4389,8 +4539,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSuketIntern.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSuketIntern.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4398,7 +4555,7 @@ class _NakesState extends State<Nakes> {
   Widget buildFasyankesSebelum() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4410,7 +4567,7 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanIzinSebelum != null
               ? Wrap(
                   children: scanIzinSebelum!.map(
@@ -4426,10 +4583,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getIzinSebelum(),
               label: const Text(
@@ -4458,8 +4614,15 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokIzinSebelum.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokIzinSebelum.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
@@ -4467,7 +4630,7 @@ class _NakesState extends State<Nakes> {
   Widget buildRekomendasiDinkes() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4488,10 +4651,10 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Nomor Rekomendasi",
+              labelText: "NOMOR REKOMENDASI",
               labelStyle: TextStyle(fontSize: 13),
             ),
             controller: _nomorRekomDinkes,
@@ -4500,10 +4663,10 @@ class _NakesState extends State<Nakes> {
               fontSize: 13,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: "Tanggal Rekomendasi",
+              labelText: "TANGGAL REKOMENDASI",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -4534,7 +4697,7 @@ class _NakesState extends State<Nakes> {
               }
             },
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanRekomDinkes != null
               ? Wrap(
                   children: scanRekomDinkes!.map(
@@ -4550,10 +4713,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getRekomDinkes(),
               label: const Text(
@@ -4575,7 +4737,7 @@ class _NakesState extends State<Nakes> {
   Widget buildIzinLama() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4587,13 +4749,13 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           TextFormField(
             style: const TextStyle(fontSize: 13),
             controller: _lamaNomor,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Nomor Izin",
+              labelText: "NOMOR IZIN",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {
@@ -4609,7 +4771,7 @@ class _NakesState extends State<Nakes> {
             controller: _lamaAn,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Atas Nama",
+              labelText: "ATAS NAMA",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {
@@ -4623,7 +4785,7 @@ class _NakesState extends State<Nakes> {
           TextFormField(
             style: const TextStyle(fontSize: 13),
             decoration: const InputDecoration(
-              labelText: "Tanggal SIP",
+              labelText: "TANGGAL SIP",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -4657,11 +4819,33 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _lamaTanggal,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_lamaTanggal.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           const SizedBox(height: 5),
           TextFormField(
             style: const TextStyle(fontSize: 13),
             decoration: const InputDecoration(
-              labelText: "Berlaku Sampai",
+              labelText: "BERLAKU SAMPAI",
               labelStyle: TextStyle(fontSize: 13),
               suffixIcon: Icon(Icons.calendar_month),
             ),
@@ -4695,7 +4879,29 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 15),
+          Visibility(
+            visible: false,
+            maintainState: true,
+            child: TextFormField(
+              controller: _lamaBerlaku,
+              validator: (value) {
+                if (value == "") {
+                  return "Error";
+                }
+                return null;
+              },
+            ),
+          ),
+          if (_lamaBerlaku.text == "")
+            const Text(
+              "WAJIB DIISI",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          const SizedBox(height: 5),
           scanSipLama != null
               ? Wrap(
                   children: scanSipLama!.map(
@@ -4714,7 +4920,6 @@ class _NakesState extends State<Nakes> {
           const SizedBox(height: 15),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getSipLama(),
               label: const Text(
@@ -4743,15 +4948,22 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokSipLama.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokSipLama.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
   Widget buildImb() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4763,13 +4975,13 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           TextFormField(
             style: const TextStyle(fontSize: 13),
             controller: _imbNomor,
             textCapitalization: TextCapitalization.words,
             decoration: const InputDecoration(
-              labelText: "Nomor IMB",
+              labelText: "NOMOR IMB",
               labelStyle: TextStyle(fontSize: 13),
             ),
             validator: (value) {
@@ -4779,7 +4991,7 @@ class _NakesState extends State<Nakes> {
               return null;
             },
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           scanImb != null
               ? Wrap(
                   children: scanImb!.map(
@@ -4795,10 +5007,9 @@ class _NakesState extends State<Nakes> {
                   ).toList(),
                 )
               : const SizedBox(),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () => getImb(),
               label: const Text(
@@ -4827,15 +5038,22 @@ class _NakesState extends State<Nakes> {
               },
             ),
           ),
-          const SizedBox(height: 5),
-          if (_dokImb.text == '') const Text("Dokumen wajib diunggah"),
+          if (_dokImb.text == '')
+            const Text(
+              "DOKUMEN WAJIB DIUNGGAH",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              ),
+            )
         ],
       );
 
   Widget buildSppl() => Column(
         children: [
           const Divider(
-            height: 50,
+            height: 30,
             thickness: 1,
             color: Colors.black,
           ),
@@ -4847,15 +5065,14 @@ class _NakesState extends State<Nakes> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 15),
+          const SizedBox(height: 5),
           IntrinsicHeight(
             child: SfPdfViewer.network(
                 "$baseUrl/dokumen/permohonan/nakes/temp/${_uidPemohon.text}.pdf"),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           SizedBox(
             width: double.infinity,
-            height: 40,
             child: ElevatedButton.icon(
               onPressed: () async {
                 if (!await launchUrl(
